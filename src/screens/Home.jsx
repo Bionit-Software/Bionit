@@ -22,6 +22,13 @@ export default function Home() {
     <div>
       <button onClick={handleLogout}>Logout</button>
       <button onClick={openModal}>dfs</button>
+      <button
+        onClick={() => {
+          navigate("/zones");
+        }}
+      >
+        ZONAS
+      </button>
     </div>
   );
 }
