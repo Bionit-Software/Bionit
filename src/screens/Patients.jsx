@@ -1,5 +1,13 @@
 import React from "react";
 
 export const Patients = () => {
-  return <div>Patients</div>;
+  const handleAddPatient = () => {
+    console.log("Add patient");
+  };
+  return (
+    <div className="flex flex-col gap-8">
+      Patients
+      <button onClick={handleAddPatient}>añadir paciente</button>
+    </div>
+  );
 };
