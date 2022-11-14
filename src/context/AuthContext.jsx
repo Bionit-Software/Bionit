@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
         // return signInWithRedirect(auth, provider);
         return signInWithPopup(auth, provider)
     }
-
+    // console.log(user)
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);//setea valores del usuario

@@ -6,32 +6,33 @@ import { motion } from 'framer-motion'
 import { db } from '../db/database';
 import { addDoc, collection } from 'firebase/firestore';
 export default function Register() {
-    const { signup, getError, errorType, loginWithGoogle } = useAuth();
-    const [user, setUser] = useState({
+    const { signup, getError, errorType, loginWithGoogle,user } = useAuth();
+    const [rol, setRol] = useState('');
+    const [userData, setUserData] = useState({
         email: '',
         password: '',
         nombre: '',
         apellido: '',
-        rol:'',
     });
 
-    const handleChange = ({ target: { name, value } }) => setUser({ ...user, [name]: value }) //actualizar estado
+    const handleChange = ({ target: { name, value } }) => setUserData({ ...userData, [name]: value }) //actualizar estado
 
     const handleSubmit = async (e) => {
-        console.log(user)
+        console.log(rol)
         e.preventDefault();
         try {
-            await signup(user.email, user.password);
-            if (errorType != 'auth/email-already-in-use' || errorType != 'Email en uso') {
-                console.log(user)
-                // const docRef = await addDoc(collection(db, 'Portero'), {
-                //     nombre: user.nombre,
-                //     apellido: user.apellido,
-                //     email: user.email,
-                //     password: user.password,
-                //     rol: user.rol,
-                // });
-                // console.log("Document written with ID: ", docRef.id);
+            await signup(userData.email, userData.password);
+            if (errorType != 'auth/email-already-in-use' || errorType != 'Email en uso' || errorType != 'Error desconocido') {
+                console.log(userData)
+                const docRef = await addDoc(collection(db, 'Usuario'), {
+                    nombre: userData.nombre,
+                    apellido: userData.apellido,
+                    email: userData.email,
+                    password: userData.password,
+                    rol: rol,
+                    uid: user.uid
+                });
+                console.log("Document written with ID: ", docRef.id);
             }
             navigate('/home');
         } catch (error) {
@@ -42,7 +43,7 @@ export default function Register() {
     const navigate = useNavigate();
 
     const submit = () => {
-        let error = {code:''};
+        let error = { code: '' };
         getError(error)
         navigate('/Login');
     }
@@ -92,8 +93,8 @@ export default function Register() {
                     <label>Contraseña</label>
                     <input type="password" name='password' placeholder='Ingrese contraseña' className='rounded-lg p-2 w-full border border-neutral-400' onChange={handleChange} />
                 </div>
-                <select name="Rol" >
-                    <option value="admin" >Administrador</option>
+                <select name="Rol" onChange={(e) => setRol(e.target.value)}>
+                    <option value="admin">Administrador</option>
                     <option value="enfermero" >Enfermero</option>
                     <option value="medico">Medico</option>
                 </select>
