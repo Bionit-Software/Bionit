@@ -9,36 +9,40 @@ import {
 import React from "react";
 import { db } from "../db/database";
 
-export const useZones = () => {
+export function useZones() {
   const [zones, setZones] = React.useState([]);
-  const addZone = async (zoneName, zoneDescription) => {
-    await addDoc(collection(db, "zones"), {
-      name: zoneName,
-      description: zoneDescription,
-      patients: [],
-      nurses: [],
-    });
-  };
-  const deleteZone = async (zoneId) => {
-    await deleteDoc(doc(db, "zones", zoneId));
-  };
-
-  const editZone = async (zoneId, zoneName, zoneDescription) => {
-    await updateDoc(doc(db, "zones", zoneId), {
-      name: zoneName,
-      description: zoneDescription,
-    });
-  };
-
   React.useEffect(() => {
-    onSnapshot(collection(db, "zones"), (querySnapshot) => {
+    const unsub = onSnapshot(collection(db, "zones"), (querySnapshot) => {
       const zones = [];
       querySnapshot.forEach((doc) => {
         zones.push({ id: doc.id, ...doc.data() });
       });
       setZones(zones);
     });
+    return () => {
+      unsub();
+    };
   }, []);
 
-  return { zones, addZone, deleteZone, editZone };
+  return { zones };
+}
+
+export const addZone = async (zoneName, zoneDescription) => {
+  await addDoc(collection(db, "zones"), {
+    name: zoneName,
+    description: zoneDescription,
+    patients: [],
+    nurses: [],
+  });
+};
+
+export const deleteZone = async (zoneId) => {
+  await deleteDoc(doc(db, "zones", zoneId));
+};
+
+export const editZone = async (zoneId, zoneName, zoneDescription) => {
+  await updateDoc(doc(db, "zones", zoneId), {
+    name: zoneName,
+    description: zoneDescription,
+  });
 };

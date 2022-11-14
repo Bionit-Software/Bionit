@@ -29,6 +29,14 @@ export default function Home() {
       >
         ZONAS
       </button>
+      <button
+        className="bg-gray-100 shadow-lg p-6 mx-4"
+        onClick={() => {
+          navigate("/patients");
+        }}
+      >
+        PACIENTES
+      </button>
     </div>
   );
 }

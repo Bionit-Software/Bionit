@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import "./index.css";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
+import { Patients } from "./screens/Patients";
 import Register from "./screens/Register";
 import { Zones } from "./screens/Zones";
 export default function App() {
@@ -30,6 +31,14 @@ export default function App() {
               element={
                 <ProtectedRoutes>
                   <Zones />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/patients"
+              element={
+                <ProtectedRoutes>
+                  <Patients />
                 </ProtectedRoutes>
               }
             />
