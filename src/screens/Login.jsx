@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import google from '../assets/google.png';
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
+
 export default function Login() {
-    const { login, getError, errorType, loginWithGoogle, user } = useAuth();
+    const { login, getError, errorType, user } = useAuth();
+
     const [userr, setUser] = useState({
         email: '',
         password: ''
@@ -30,12 +31,7 @@ export default function Login() {
         }
     }
 
-    const handleGoogleLogin = async () => {
-        await loginWithGoogle();
-        navigate('/Home');
-    }
-
-    const submit = () => {
+    const submitRegister = () => {
         let error = {code:''};
         getError(error)
         navigate('/Register');
@@ -83,21 +79,9 @@ export default function Login() {
                         Iniciar sesión
                     </button>
                 </motion.div>
-                <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className='gap-4 flex justify-center mt-5 mb-10'>
-                    <button onClick={handleGoogleLogin}
-                        className="rounded-full bg-white w-4/6 h-10
-                        border border-neutral-400 flex
-                        justify-center">
-                        <img src={google} alt="google" height="20px" width="20px" className='mt-2' />
-                        <p style={{ padding: '0px', fontSize: '18px', fontWeight: '300' }} className='mt-1'>Iniciar con Google</p>
-                    </button>
-                </motion.div>
                 <div className="gap-4 justify-items-center flex justify-center ">
                     <p style={{ color: '#121212c4', fontSize: '18px', fontWeight: '400' }}>No tenés cuenta?</p>
-                    <p onClick={() => submit()} style={{ color: '#078282', fontSize: '18px', fontWeight: '600', cursor: 'pointer' }}>Registrate</p>
+                    <p onClick={() => submitRegister()} style={{ color: '#078282', fontSize: '18px', fontWeight: '600', cursor: 'pointer' }}>Registrate</p>
                 </div>
             </motion.div>
         </div>

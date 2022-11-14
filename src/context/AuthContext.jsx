@@ -2,10 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     onAuthStateChanged, 
-    signOut,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signInWithRedirect
+    signOut
 } from 'firebase/auth';
 import { auth } from '../db/database';
 const authContext = createContext();
@@ -21,7 +18,6 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [errorType, setErrorType] = useState('');
-
     const signup = (email, password) =>
         createUserWithEmailAndPassword(auth, email, password);
 
@@ -30,13 +26,6 @@ const AuthProvider = ({ children }) => {
 
     const logout = () => signOut(auth);
 
-    const loginWithGoogle = () => {
-        const provider = new GoogleAuthProvider();
-        console.log(provider);
-        // return signInWithRedirect(auth, provider);
-        return signInWithPopup(auth, provider)
-    }
-    // console.log(user)
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);//setea valores del usuario
@@ -46,7 +35,6 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     const getError = (error) => {//función para devolver los tipos errores
-        console.log(error.code)
         switch(error.code){
         case 'auth/invalid-email':
             setErrorType('Correo electrónico invalido');
@@ -69,6 +57,18 @@ const AuthProvider = ({ children }) => {
         case "auth/email-already-in-use":
             setErrorType('Email en uso');
             break;
+        case "auth/empty-name":
+            setErrorType('Ingrese su nombre');
+            break;
+        case "auth/empty-lastname":
+            setErrorType('Ingrese su apellido');
+            break;
+        case "auth/empty-email":
+            setErrorType('Ingrese su email');
+            break;
+        case "auth/empty-password":
+            setErrorType('Ingrese su contraseña');
+            break;
         case "":
             setErrorType("");
             break;
@@ -80,8 +80,7 @@ const AuthProvider = ({ children }) => {
 
     const data = { signup, login, 
         logout, user, loading, 
-        getError, errorType, 
-        loginWithGoogle
+        getError, errorType
     }
     return (
         <authContext.Provider value={data}>{children}</authContext.Provider>

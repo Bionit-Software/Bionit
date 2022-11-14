@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import google from '../assets/google.png';
 import { motion } from 'framer-motion'
-import { db } from '../db/database';
+import { db, auth } from '../db/database';
 import { addDoc, collection } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 export default function Register() {
-    const { signup, getError, errorType, loginWithGoogle,user } = useAuth();
+    const { getError, errorType } = useAuth();
     const [rol, setRol] = useState('');
     const [userData, setUserData] = useState({
         email: '',
@@ -18,39 +18,47 @@ export default function Register() {
     const handleChange = ({ target: { name, value } }) => setUserData({ ...userData, [name]: value }) //actualizar estado
 
     const handleSubmit = async (e) => {
-        console.log(rol)
         e.preventDefault();
         try {
-            await signup(userData.email, userData.password);
-            if (errorType != 'auth/email-already-in-use' || errorType != 'Email en uso' || errorType != 'Error desconocido') {
-                console.log(userData)
-                const docRef = await addDoc(collection(db, 'Usuario'), {
-                    nombre: userData.nombre,
-                    apellido: userData.apellido,
-                    email: userData.email,
-                    password: userData.password,
-                    rol: rol,
-                    uid: user.uid
+            if(userData.nombre !== "" && userData.apellido !== "" && userData.email !== "" && userData.password !== ""){
+            await createUserWithEmailAndPassword(auth, userData.email, userData.password)
+                .then((a) => {
+                        addDoc(collection(db, 'usuario'), {
+                            email: userData.email,
+                            nombre: userData.nombre,
+                            apellido: userData.apellido,
+                            rol: rol,
+                            uid: a.user.uid
+                        })
+                        navigate('/home');
                 });
-                console.log("Document written with ID: ", docRef.id);
+            }else{
+                if(userData.nombre === ""){
+                    let error = {code:'auth/empty-name'};
+                    getError(error)
+                }else{
+                    let error = {code:'auth/empty-lastname'};
+                    getError(error)
+                }
+                if(userData.email === ""){
+                    let error = {code:'auth/empty-email'};
+                    getError(error)
+                }else{
+                    let error = {code:'auth/empty-password'};
+                    getError(error)
+                }
             }
-            navigate('/home');
         } catch (error) {
-            getError(error)//mando a la funcion el error
+            getError(error)
         }
     }
 
     const navigate = useNavigate();
 
-    const submit = () => {
+    const submitIniciar = () => {
         let error = { code: '' };
         getError(error)
         navigate('/Login');
-    }
-
-    const handleGoogleLogin = async () => {
-        await loginWithGoogle();
-        navigate('/Home');
     }
 
     return (
@@ -93,36 +101,34 @@ export default function Register() {
                     <label>Contraseña</label>
                     <input type="password" name='password' placeholder='Ingrese contraseña' className='rounded-lg p-2 w-full border border-neutral-400' onChange={handleChange} />
                 </div>
-                <select name="Rol" onChange={(e) => setRol(e.target.value)}>
+                <select className='rounded-lg w-full mt-5 h-10 font-semibold border border-neutral-400' name="Rol" onChange={(e) => setRol(e.target.value)}>
+                    <option value=""> Seleccione Rol...</option>
                     <option value="admin">Administrador</option>
                     <option value="enfermero" >Enfermero</option>
                     <option value="medico">Medico</option>
                 </select>
-                <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className='gap-4 flex justify-center mt-5 mb-5'>
-                    <button onClick={handleSubmit}
-                        className="text-lg text-white rounded-full 
-                        bg-teal-600 w-4/6 h-10 font-semibold">
-                        Crear Cuenta
-                    </button>
-                </motion.div>
-                <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className='gap-4 flex justify-center mt-5 mb-2'>
-                    <button onClick={handleGoogleLogin}
-                        className="rounded-full bg-white w-4/6 h-10
-                        border border-neutral-400 flex
-                        justify-center">
-                        <img src={google} alt="google" height="20px" width="20px" className='mt-2' />
-                        <p style={{ padding: '0px', fontSize: '18px', fontWeight: '300' }} className='mt-1'>Iniciar con Google</p>
-                    </button>
-                </motion.div>
-                <div>
+                {rol === '' &&
+                    <div
+                        className='gap-4 flex justify-center mt-5 mb-5'>
+                        <div className="text-lg text-white rounded-full pt-1
+                         bg-slate-500 w-4/6 h-10 font-semibold">
+                            Seleccione Rol...
+                        </div>
+                    </div>}
+                {rol !== '' &&
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className='gap-4 flex justify-center mt-5 mb-5'>
+                        <button onClick={handleSubmit}
+                            className="text-lg text-white rounded-full 
+                             bg-teal-600 w-4/6 h-10 font-semibold">
+                            Crear Cuenta
+                        </button>
+                    </motion.div>}
+                <div className='flex justify-center gap-4'>
                     <p style={{ color: '#121212c4', fontSize: '18px', fontWeight: '400' }}>Ya tengo cuenta</p>
-                    <p onClick={() => submit()} style={{ color: '#078282', fontSize: '18px', fontWeight: '600', cursor: 'pointer' }}>Iniciar Sesión</p>
+                    <p onClick={() => submitIniciar()} style={{ color: '#078282', fontSize: '18px', fontWeight: '600', cursor: 'pointer' }}>Iniciar Sesión</p>
                 </div>
             </motion.div>
         </div>
