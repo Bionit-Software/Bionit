@@ -10,7 +10,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const openModal = () => {
-    NiceModal.show(RolSelectionDialog, {});
+    NiceModal.show(RolSelectionDialog, { name: "name" });
   };
 
   const handleLogout = async () => {

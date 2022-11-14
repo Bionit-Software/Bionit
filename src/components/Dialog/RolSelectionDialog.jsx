@@ -1,30 +1,18 @@
+import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import React from "react";
 import BaseDialog from "./BaseDialog";
 
-export const RolSelectionDialog = () => {
-  const [open, setOpen] = React.useState(false);
+const RolSelectionDialog = NiceModal.create(({ name }) => {
+  // Use a hook to manage the modal state
+  const modal = useModal();
   return (
-    <BaseDialog
-      isOpen={open}
-      onClose={() => {
-        setOpen(false);
-      }}
-    >
-      <div className="bg-white rounded-lg p-4">
-        <p className="text-center text-2xl text-slate-700 font-semibold">
-          Selecciona tu rol
-        </p>
-        <div className="flex justify-center">
-          <button className="bg-teal-600 text-white rounded-lg p-2 w-4/6 mt-5">
-            Soy un cliente
-          </button>
-        </div>
-        <div className="flex justify-center">
-          <button className="bg-teal-600 text-white rounded-lg p-2 w-4/6 mt-5">
-            Soy un profesional
-          </button>
-        </div>
+    <BaseDialog isOpen={modal.visible} onClose={() => modal.hide()}>
+      <div className="bg-cyan-300 p-12">
+        <h1 className="text-3xl">Hi {name}</h1>
+        <button onClick={() => modal.hide()}>Close</button>
       </div>
     </BaseDialog>
   );
-};
+});
+
+export { RolSelectionDialog };
