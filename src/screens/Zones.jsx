@@ -21,7 +21,7 @@ export const Zones = () => {
 
   <div className="container h-full w-full flex">
     <Navbar/>
-    <div className="container h-full w-10/12">
+    <div className="container h-full w-full">
       Zones
       <button
         onClick={() => {

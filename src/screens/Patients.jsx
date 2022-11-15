@@ -22,7 +22,7 @@ export const Patients = () => {
   return (
     <div className="container h-full w-full flex">
       <Navbar />
-      <div className="container h-full w-10/12">
+      <div className="container h-full w-full">
         <div className="flex flex-col gap-8">
           Fichas de pacientes
           <button onClick={handleAddPatient}>añadir paciente</button>
