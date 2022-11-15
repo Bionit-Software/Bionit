@@ -1,5 +1,11 @@
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React from "react";
-import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../db/database";
 
 export function useUser(id) {

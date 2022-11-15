@@ -1,21 +1,27 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect } from "react";
-import { deletePatient, useSinglePatient } from "../../hooks/usePatients";
+import { deletePatient, useSinglePatientFile } from "../../hooks/usePatients";
 import BaseDialog from "./BaseDialog";
+import { EditPatientDialog } from "./EditPatientDialog";
 
 /**
- *
+ * @requires fileId
+ * @summary Dialog to show patient details
  */
 
 const PatientDetailsDialog = NiceModal.create((props) => {
-  const { patientId } = props;
+  const { fileId } = props;
   const modal = NiceModal.useModal();
-  const { patient } = useSinglePatient(patientId);
+  const { file } = useSinglePatientFile(fileId);
 
   const handleDeletePatient = () => {
-    deletePatient(patientId);
+    deletePatient(fileId);
     modal.remove();
+  };
+
+  const handleEditfile = () => {
+    NiceModal.show(EditPatientDialog, { file: file });
   };
 
   return (
@@ -33,24 +39,28 @@ const PatientDetailsDialog = NiceModal.create((props) => {
         >
           Eliminar
         </button>
-        <button className="bg-amber-500 hover:bg-amber-700 p-3 px-2 text-white font-medium">
+        <button
+          onClick={handleEditfile}
+          className="bg-amber-500 hover:bg-amber-700 p-3 px-2 text-white font-medium"
+        >
           editar
         </button>
         <div className="flex flex-col gap-4 p-2 items-start">
-          <span>Nombre: {patient?.nombre}</span>
-          <span>Apellido: {patient?.apellido}</span>
-          <span>DNI: {patient?.dni}</span>
-          <span>Telefono: {patient?.telefono}</span>
-          <span>Direccion: {patient?.direccion}</span>
-          <span>Fecha de nacimiento: {patient?.fechaNacimiento}</span>
-          <span>Obra social: {patient?.obraSocial}</span>
-          <span>Sexo: {patient?.sexo}</span>
-          <span>Estado civil: {patient?.estadoCivil}</span>
+          <span>Id: {file?.id}</span>
+          <span>Nombre: {file?.paciente.nombre}</span>
+          <span>Apellido: {file?.paciente.apellido}</span>
+          <span>DNI: {file?.paciente.dni}</span>
+          <span>Telefono: {file?.paciente.telefono}</span>
+          <span>Direccion: {file?.paciente.direccion}</span>
+          <span>Fecha de nacimiento: {file?.paciente.fechaNacimiento}</span>
+          <span>Obra social: {file?.paciente.obraSocial}</span>
+          <span>Sexo: {file?.paciente.sexo}</span>
+          <span>Estado civil: {file?.paciente.estadoCivil}</span>
           <span>
-            Antecedentes quirurgicos: {patient?.antecedentesQuirurgicos}
+            Antecedentes quirurgicos: {file?.paciente.antecedentesQuirurgicos}
           </span>
-          <span>Alergias: {patient?.alergias}</span>
-          <span>Grupo Sanguineo: {patient?.grupoSanguineo}</span>
+          <span>Alergias: {file?.paciente.alergias}</span>
+          <span>Grupo Sanguineo: {file?.paciente.grupoSanguineo}</span>
         </div>
       </div>
     </BaseDialog>

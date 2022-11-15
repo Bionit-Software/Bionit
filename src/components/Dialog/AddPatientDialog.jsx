@@ -4,21 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import { addPatient } from "../../hooks/usePatients";
 import { useEnfermeros } from "../../hooks/useUsers";
 import { useZones } from "../../hooks/useZones";
+import { DialogInput } from "../DialogInput";
 import BaseDialog from "./BaseDialog";
-
-const DialogInput = ({ label, value, onChange }) => {
-  return (
-    <div className="flex flex-col gap-2 ">
-      <label className="text-md font-medium">{label}</label>
-      <input
-        type="text"
-        className="bg-gray-200 rounded"
-        value={value}
-        onChange={onChange}
-      />
-    </div>
-  );
-};
 
 export const AddPatientDialog = NiceModal.create(({ userId }) => {
   const [patient, setPatient] = React.useState({
@@ -35,10 +22,8 @@ export const AddPatientDialog = NiceModal.create(({ userId }) => {
     alergias: "",
     grupoSanguineo: "",
   });
-
   const [selectedZoneId, setSelectedZoneId] = React.useState("");
   const [selectedNurseId, setSelectedNurseId] = React.useState("");
-
   const modal = NiceModal.useModal();
   const { zones } = useZones();
   const { enfermeros } = useEnfermeros();

@@ -8,48 +8,45 @@ import {
 import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../db/database";
-const usePatients = () => {
-  const [patients, setPatients] = React.useState([]);
+const usePatientsFiles = () => {
+  const [files, setFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, "paciente"),
-      (querySnapshot) => {
-        const patients = [];
-        querySnapshot.forEach((doc) => {
-          patients.push({ ...doc.data(), id: doc.id });
-        });
-        setPatients(patients);
-        setLoading(false);
-      }
-    );
+    const unsubscribe = onSnapshot(collection(db, "ficha"), (querySnapshot) => {
+      const patientsFiles = [];
+      querySnapshot.forEach((doc) => {
+        patientsFiles.push({ ...doc.data(), id: doc.id });
+      });
+      setFiles(patientsFiles);
+      setLoading(false);
+    });
     return unsubscribe;
   }, []);
 
   return {
-    patients,
+    files,
     loading,
   };
 };
 
-export const useSinglePatient = (id) => {
-  const [patient, setPatient] = React.useState(null);
+export const useSinglePatientFile = (id) => {
+  const [file, setFile] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const patientRef = doc(db, "paciente", id);
+    const patientRef = doc(db, "ficha", id);
     const unsubscribe = onSnapshot(patientRef, (doc) => {
-      setPatient({ id: doc.id, ...doc.data() });
+      setFile({ id: doc.id, ...doc.data() });
       setLoading(false);
     });
     return () => unsubscribe();
   }, [id]);
-  return { patient, loading };
+  return { file, loading };
 };
 
 export const deletePatient = async (id) => {
-  await deleteDoc(doc(db, "paciente", id));
+  await deleteDoc(doc(db, "ficha", id));
 };
 
 export const addPatient = async (patient, zonaId, enfermeroId, userId) => {
@@ -75,4 +72,4 @@ export const addPatient = async (patient, zonaId, enfermeroId, userId) => {
   });
 };
 
-export default usePatients;
+export default usePatientsFiles;
