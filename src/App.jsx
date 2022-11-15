@@ -2,13 +2,11 @@ import NiceModal from "@ebay/nice-modal-react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
-import { Patients } from "./screens/Patients";
 import Register from "./screens/Register";
-import { Zones } from "./screens/Zones";
 export default function App() {
   return (
     <NiceModal.Provider>
@@ -23,22 +21,6 @@ export default function App() {
               element={
                 <ProtectedRoutes>
                   <Home />
-                </ProtectedRoutes>
-              }
-            />{" "}
-            <Route
-              path="/zones"
-              element={
-                <ProtectedRoutes>
-                  <Zones />
-                </ProtectedRoutes>
-              }
-            />
-            <Route
-              path="/patients"
-              element={
-                <ProtectedRoutes>
-                  <Patients />
                 </ProtectedRoutes>
               }
             />

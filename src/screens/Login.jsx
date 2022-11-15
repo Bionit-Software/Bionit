@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import { useUser, useUsers } from '../hooks/useUsers';
 
 export default function Login() {
     const { login, getError, errorType, user } = useAuth();
@@ -24,8 +25,12 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await login(userr.email, userr.password)
-            navigate('/Home');
+            await login(userr.email, userr.password).then((a) => {
+                // useUser(a.user.uid);
+                useUser(a.user.uid);
+            });
+                
+            navigate('/home');
         } catch (error) {
             getError(error)//mando el error por parametro
         }
