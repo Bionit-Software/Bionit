@@ -14,7 +14,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      navigate("/home");
+      navigate("/patients");
     }
   }, [user]);
 
@@ -31,7 +31,7 @@ export default function Login() {
         useUser(a.user.uid);
       });
 
-      navigate("/home");
+      navigate("/patients");
     } catch (error) {
       getError(error); //mando el error por parametro
     }
@@ -40,7 +40,7 @@ export default function Login() {
   const submitRegister = () => {
     let error = { code: "" };
     getError(error);
-    navigate("/Register");
+    navigate("/register");
   };
 
   return (

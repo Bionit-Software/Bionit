@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useUser } from "../hooks/useUsers";
-
+import { motion } from "framer-motion";
 export default function Navbar() {
     const { logout, user } = useAuth();
     const handleLogout = () => {
@@ -11,11 +11,16 @@ export default function Navbar() {
     const navigate = useNavigate();
     const { userData } = useUser(user.uid);
     return (
-        <div className="container h-full w-2/12 p-2">
-            <div className="container flex flex-col gap-6">
-                <button className="bg-gray-700 shadow-lg p-6 w-full container" onClick={handleLogout}>
-                    <p>Logout</p>
-                </button>
+        <div className="container h-full w-2/12 p-2 shadow-lg">
+            <motion.div
+                initial={{ x: -100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                    duration: 0.7,
+                    delay: 0.6,
+                    ease: [0, 0.71, 0.2, 1.01],
+                }}
+                className="container flex flex-col gap-6">
                 <button
                     className="bg-gray-100 shadow-lg p-6 w-full"
                     onClick={() => {
@@ -24,29 +29,36 @@ export default function Navbar() {
                 >
                     PACIENTES
                 </button>
-                <button
-                    className="bg-gray-100 shadow-lg p-6 w-full"
-                    onClick={() => {
-                        navigate("/zones");
-                    }}
-                >
-                    Zonas
-                </button>
                 {userData?.rol === "admin" ? (
-                    <button
-                        className="bg-gray-100 shadow-lg p-6 w-full"
-                        onClick={() => navigate("/home/dashboard")}
-                    >
-                        Dashboard
-                    </button>
+                    <div className="container flex flex-col gap-6">
+                        <button
+                            className="bg-gray-100 shadow-lg p-6 w-full"
+                            onClick={() => {
+                                navigate("/zones");
+                            }}
+                        >
+                            Zonas
+                        </button>
+                        <button
+                            className="bg-gray-100 shadow-lg p-6 w-full"
+                            onClick={() => navigate("/patients/dashboard")}
+                        >
+                            Dashboard
+                        </button>
+                    </div>
                 ) : null}
                 <button
-                className="bg-gray-100 shadow-lg p-6 w-full"
-                
+                    className="bg-gray-100 shadow-lg p-6 w-full"
+
                 >
                     Simular Llamada
                 </button>
-            </div>
+                <button onClick={handleLogout} 
+                    className="bg-red-500 text-white w-full 
+                    font-semibold rounded-lg p-6 shadow-lg">
+                    Cerrar Sesión
+                </button>
+            </motion.div>
         </div>
     )
 }

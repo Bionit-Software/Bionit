@@ -6,7 +6,6 @@ import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 import Dashboard from "./screens/Dashboard";
-import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import { Zones } from "./screens/Zones";
@@ -21,10 +20,10 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route
-              path="/home"
+              path="/patients/*"
               element={
                 <ProtectedRoutes>
-                  <Home />
+                  <Patients />
                 </ProtectedRoutes>
               }
             />
@@ -37,15 +36,7 @@ export default function App() {
               }
             />
             <Route
-              path="/patients"
-              element={
-                <ProtectedRoutes>
-                  <Patients />
-                </ProtectedRoutes>
-              }
-            />
-            <Route
-              path="/home/dashboard"
+              path="/patients/dashboard"
               element={
                 <ProtectedRoutes>
                   <Dashboard />
