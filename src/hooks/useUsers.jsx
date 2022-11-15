@@ -42,27 +42,3 @@ export function useUser(id) {
     }, [id]);    
     return { userData };
 }
-// export function useUser(id) {
-//     const [user, setUser] = React.useState({});
-//     console.log(user)
-    // React.useEffect(() => {
-    //    export const useUser = async (id) => {
-    //     const [user, setUser] = React.useState({});
-    //         const colRef = collection(db, "usuario");
-    //         const docsSnap = await getDocs(colRef);
-    //         docsSnap.forEach((doc) => {
-    //             const data = doc.data();
-    //             console.log(data.uid);
-    //             console.log(id, "cortina plana que viene de allá");
-    //             if (data.uid === id) {
-    //                 console.log('este es el usuario nasi', data);
-    //                 setUser(data);
-    //             }
-    //         });
-    //         return { user };
-    //     };
-    //     return () => {
-    //         messi();
-    //     };
-    // }, []);
-// }
