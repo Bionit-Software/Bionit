@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import { useUser, useUsers } from '../hooks/useUsers';
+import { useUser } from '../hooks/useUsers';
 
 export default function Login() {
     const { login, getError, errorType, user } = useAuth();

@@ -1,8 +1,7 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useUser, useUsers } from "../hooks/useUsers";
-import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import { useUser } from "../hooks/useUsers";
 import Dashboard from "./Dashboard";
 
 export default function Home() {
