@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AddZoneDialog } from "../components/Dialog/AddZoneDialog";
 import { EditZoneDialog } from "../components/Dialog/EditZoneDialog";
+import Navbar from "../components/Navbar";
 import { deleteZone, useZones } from "../hooks/useZones";
 
 export const Zones = () => {
@@ -17,7 +18,10 @@ export const Zones = () => {
   const { zones } = useZones();
 
   return (
-    <div>
+
+  <div className="container h-full w-full flex">
+    <Navbar/>
+    <div className="container h-full w-10/12">
       Zones
       <button
         onClick={() => {
@@ -54,6 +58,7 @@ export const Zones = () => {
         })}
       </div>
     </div>
+  </div>
   );
 };
 
