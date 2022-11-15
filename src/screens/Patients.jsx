@@ -30,16 +30,16 @@ export const Patients = () => {
             {loading ? (
               <div>Loading...</div>
             ) : (
-              files.map((patient) => {
+              files.map((file) => {
                 return (
                   <div
                     className="flex flex-col gap-4 bg-gray-100 shadow-lg p-12 w-full text-lg font-medium"
-                    key={patient.id}
-                    onClick={() => handlePatientDetailsClick(patient)}
+                    key={file.id}
+                    onClick={() => handlePatientDetailsClick(file)}
                   >
-                    <div>Nombre: {patient.nombre}</div>
-                    <div>Apellido: {patient.apellido}</div>
-                    <div>DNI: {patient.dni}</div>
+                    <div>Nombre: {file.paciente.nombre}</div>
+                    <div>Apellido: {file.paciente.apellido}</div>
+                    <div>DNI: {file.paciente.dni}</div>
                   </div>
                 );
               })

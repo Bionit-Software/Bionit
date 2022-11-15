@@ -4,6 +4,7 @@ import {
   deleteDoc,
   doc,
   onSnapshot,
+  updateDoc,
 } from "firebase/firestore";
 import React from "react";
 import { useAuth } from "../context/AuthContext";
@@ -47,6 +48,16 @@ export const useSinglePatientFile = (id) => {
 
 export const deletePatient = async (id) => {
   await deleteDoc(doc(db, "ficha", id));
+};
+
+export const editPatient = async (
+  patient,
+  id,
+  selectedZoneId,
+  selectedNurseId
+) => {
+  // console.log(patient, id);
+  await updateDoc(doc(db, "ficha", id), patient);
 };
 
 export const addPatient = async (patient, zonaId, enfermeroId, userId) => {
