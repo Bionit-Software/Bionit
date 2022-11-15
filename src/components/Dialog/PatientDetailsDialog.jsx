@@ -31,7 +31,7 @@ const PatientDetailsDialog = NiceModal.create((props) => {
         modal.hide();
       }}
     >
-      <div className="bg-white w-80 p-4 px-6 rounded-md">
+      <div className="bg-white w-96 p-4 px-6 rounded-md">
         <h1>Ficha del paciente</h1>
         <button
           onClick={handleDeletePatient}
