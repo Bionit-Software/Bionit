@@ -1,23 +1,23 @@
-import { addDoc, deleteDoc, updateDoc } from "firebase/database";
-import { collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, updateDoc } from "firebase/firestore";
 import React from "react";
 import { db } from "../db/database";
 const usePatients = () => {};
 
-export const addPatient = async () => {
+export const addPatient = async (patient) => {
   await addDoc(collection(db, "paciente"), {
-    nombre: "nombre",
-    apellido: "apellido",
-    dni: "dni",
-    telefono: "telefono",
-    direccion: "direccion",
-    fechaNacimiento: "fechaNacimiento",
-    obraSocial: "obraSocial",
-    sexo: "sexo",
-    estadoCivil: "estadoCivil",
-    antecedentesQuirurgicos: "antecedentesQuirurgicos",
-    alergias: "alergias",
-    grupoSanguineo: "grupoSanguineo",
+    nombre: patient.nombre,
+    apellido: patient.apellido,
+    dni: patient.dni,
+    telefono: patient.telefono,
+    direccion: patient.direccion,
+    fechaNacimiento: patient.fechaNacimiento,
+    obraSocial: patient.obraSocial,
+    sexo: patient.sexo,
+    estadoCivil: patient.estadoCivil,
+    antecedentesQuirurgicos: patient.antecedentesQuirurgicos,
+    alergias: patient.alergias,
+    grupoSanguineo: patient.grupoSanguineo,
   });
 };
+
 export default usePatients;

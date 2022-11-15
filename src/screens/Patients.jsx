@@ -1,8 +1,11 @@
+import NiceModal from "@ebay/nice-modal-react";
 import React from "react";
+import { AddPatientDialog } from "../components/Dialog/AddPatientDialog";
 
 export const Patients = () => {
   const handleAddPatient = () => {
-    console.log("Add patient");
+    //Open add patient dialog
+    NiceModal.show(AddPatientDialog, {});
   };
   return (
     <div className="flex flex-col gap-8">
