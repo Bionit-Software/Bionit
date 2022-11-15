@@ -13,9 +13,11 @@ const BaseDialog = ({ isOpen, onClose, children }) => {
           delay: 0.1,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="fixed inset-0 flex items-center justify-center"
+        className="fixed inset-0 flex items-center justify-center w-screen h-screen"
       >
-        <Dialog.Panel>{children}</Dialog.Panel>
+        <Dialog.Panel className={"flex items-center justify-center"}>
+          {children}
+        </Dialog.Panel>
       </motion.div>
     </Dialog>
   );

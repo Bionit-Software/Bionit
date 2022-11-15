@@ -1,4 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
+import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
@@ -25,7 +26,7 @@ export default function App() {
                   <Home />
                 </ProtectedRoutes>
               }
-            />{" "}
+            />
             <Route
               path="/zones"
               element={
