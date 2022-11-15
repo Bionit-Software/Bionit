@@ -1,34 +1,31 @@
-import NiceModal from "@ebay/nice-modal-react";
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { RolSelectionDialog } from "../components/Dialog/RolSelectionDialog";
+import React from "react";
 import { useAuth } from "../context/AuthContext";
-import useUsers from "../hooks/useUsers";
+import { useNavigate } from "react-router-dom";
+import { useUser, useUsers } from "../hooks/useUsers";
 
 export default function Home() {
   const { logout, user } = useAuth();
-  const { getUser } = useUsers();
-  useEffect( () => { 
-    console.log(getUser())
-  }, []);
+  console.log(user);
+  const handleLogout = () => {
+    logout();
+  };
   const navigate = useNavigate();
-
-  const openModal = () => {
-    NiceModal.show(RolSelectionDialog, {name:user.displayName});
-  };
-
-  const handleLogout = async () => {
-    navigate("/Login");
-    await logout();
-  };
-
+  const { userData } = useUser(user.uid);
+  console.log(userData?.rol)
   return (
     <div>
       <button onClick={handleLogout}>Logout</button>
-      <button onClick={openModal}>dfs</button>
       <button
         onClick={() => {
           navigate("/zones");
+        }}
+      >
+        {userData?.rol}
+        ZONAS
+      </button>
+      <button
+        onClick={() => {
+          navigate("/admin");
         }}
       >
         ZONAS

@@ -3,13 +3,11 @@ import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
-import { Patients } from "./screens/Patients";
 import Register from "./screens/Register";
-import { Zones } from "./screens/Zones";
 export default function App() {
   return (
     <NiceModal.Provider>

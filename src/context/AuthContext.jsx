@@ -19,12 +19,13 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorType, setErrorType] = useState("");
-  const signup = (email, password) =>
+  const signup = (email, password) => {
     createUserWithEmailAndPassword(auth, email, password);
+  };
 
-  const login = (email, password) =>
+  const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password);
-
+  };
   const logout = () => signOut(auth);
 
   useEffect(() => {
@@ -80,8 +81,17 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const data = { signup, login, logout, user, loading, getError, errorType };
+  const data = {
+    signup,
+    login,
+    logout,
+    user,
+    loading,
+    getError,
+    errorType,
+  };
   return <authContext.Provider value={data}>{children}</authContext.Provider>;
 };
+
 export { AuthProvider };
 export default authContext;
