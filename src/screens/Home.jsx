@@ -1,7 +1,8 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useUser } from "../hooks/useUsers";
+import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import { useAuth } from "../context/AuthContext";
+import { useUser, useUsers } from "../hooks/useUsers";
 import Dashboard from "./Dashboard";
 
 export default function Home() {
@@ -12,14 +13,17 @@ export default function Home() {
   };
   const navigate = useNavigate();
   const { userData } = useUser(user.uid);
-  console.log(userData?.rol)
+  console.log(userData?.rol);
   return (
     <div>
-      <button className="bg-gray-100 shadow-lg p-6 mx-4"
-      onClick={handleLogout}>Logout</button>
+      <button className="bg-gray-100 shadow-lg p-6 mx-4" onClick={handleLogout}>
+        Logout
+      </button>
       {userData?.rol === "admin" ? (
-        <button className="bg-gray-100 shadow-lg p-6 mx-4"
-        onClick={() => navigate("/home/dashboard")}>
+        <button
+          className="bg-gray-100 shadow-lg p-6 mx-4"
+          onClick={() => navigate("/home/dashboard")}
+        >
           Dashboard
         </button>
       ) : null}
