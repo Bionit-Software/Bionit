@@ -30,7 +30,7 @@ export const Patients = () => {
             {loading ? (
               <div>Loading...</div>
             ) : (
-              patients.map((patient) => {
+              files.map((patient) => {
                 return (
                   <div
                     className="flex flex-col gap-4 bg-gray-100 shadow-lg p-12 w-full text-lg font-medium"

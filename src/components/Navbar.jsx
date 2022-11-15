@@ -54,8 +54,8 @@ export default function Navbar() {
                     Simular Llamada
                 </button>
                 <button onClick={handleLogout} 
-                    className="bg-red-500 text-white w-full 
-                    font-semibold rounded-lg p-6 shadow-lg">
+                    className="bg-red-500 shadow-lg shadow-red-500/50 text-white w-full 
+                    font-semibold rounded-lg p-6 ">
                     Cerrar Sesión
                 </button>
             </motion.div>
