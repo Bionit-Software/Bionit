@@ -1,40 +1,18 @@
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
-import { useUser } from "../hooks/useUsers";
-import Dashboard from "./Dashboard";
 
 export default function Home() {
   const { logout, user } = useAuth();
-  console.log(user);
   const handleLogout = () => {
     logout();
   };
-  const navigate = useNavigate();
-  const { userData } = useUser(user.uid);
-  console.log(userData?.rol);
   return (
-    <div>
-      <button className="bg-gray-100 shadow-lg p-6 mx-4" onClick={handleLogout}>
-        Logout
-      </button>
-      {userData?.rol === "admin" ? (
-        <button
-          className="bg-gray-100 shadow-lg p-6 mx-4"
-          onClick={() => navigate("/home/dashboard")}
-        >
-          Dashboard
-        </button>
-      ) : null}
-      <button
-        className="bg-gray-100 shadow-lg p-6 mx-4"
-        onClick={() => {
-          navigate("/patients");
-        }}
-      >
-        PACIENTES
-      </button>
+    <div className="container h-full w-full flex">
+      <Navbar/>
+      <div className="container h-full w-full">
+        holA
+      </div>
     </div>
   );
 }

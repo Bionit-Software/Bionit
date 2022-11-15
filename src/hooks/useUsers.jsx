@@ -10,7 +10,6 @@ import { db } from "../db/database";
 
 export function useUser(id) {
   const [userData, setUser] = React.useState(null);
-  console.log(id);
   React.useEffect(() => {
     const unsub = onSnapshot(
       query(collection(db, "usuario"), where("uid", "==", id)),
