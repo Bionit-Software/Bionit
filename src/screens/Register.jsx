@@ -39,7 +39,7 @@ export default function Register() {
             rol: rol,
             uid: a.user.uid,
           });
-          navigate("/home");
+          navigate("/patients");
         });
       } else {
         if (userData.nombre === "") {
@@ -67,7 +67,7 @@ export default function Register() {
   const submitIniciar = () => {
     let error = { code: "" };
     getError(error);
-    navigate("/Login");
+    navigate("/login");
   };
 
   return (
