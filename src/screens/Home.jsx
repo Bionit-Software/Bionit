@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useUser, useUsers } from "../hooks/useUsers";
+import { useAuth } from "../context/AuthContext";
+import { useUser } from "../hooks/useUsers";
 
 export default function Home() {
   const { logout, user } = useAuth();
@@ -11,7 +11,7 @@ export default function Home() {
   };
   const navigate = useNavigate();
   const { userData } = useUser(user.uid);
-  console.log(userData?.rol)
+  console.log(userData?.rol);
   return (
     <div>
       <button onClick={handleLogout}>Logout</button>
