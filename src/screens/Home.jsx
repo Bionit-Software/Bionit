@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ProtectedRoutes } from "../components/ProtectedRoutes";
 import { useAuth } from "../context/AuthContext";
-import { useUser, useUsers } from "../hooks/useUsers";
+import { useUser } from "../hooks/useUsers";
 import Dashboard from "./Dashboard";
 
 export default function Home() {
