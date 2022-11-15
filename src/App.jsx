@@ -5,6 +5,7 @@ import "./App.css";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
+import Dashboard from "./screens/Dashboard";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
@@ -41,9 +42,18 @@ export default function App() {
                 </ProtectedRoutes>
               }
             />
+            <Route
+              path="/home/dashboard"
+              element={
+                <ProtectedRoutes>
+                  <Dashboard />
+                </ProtectedRoutes>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
     </NiceModal.Provider>
   );
 }
+
