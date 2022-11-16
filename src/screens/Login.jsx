@@ -1,4 +1,12 @@
 import { motion } from "framer-motion";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import {db} from "../db/database";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -6,15 +14,27 @@ import { useUser } from "../hooks/useUsers";
 
 export default function Login() {
   const { login, getError, errorType, user } = useAuth();
-
   const [userr, setUser] = useState({
     email: "",
     password: "",
   });
 
-  useEffect(() => {
+  useEffect( () => {
     if (user) {
-      navigate("/patients");
+      onSnapshot(
+        query(collection(db, "usuario"), where("uid", "==", user.uid )),
+        (querySnapshot) => {
+        const data = querySnapshot.docs[0].data();
+        console.log(data)
+        if (data.rol === "admin") {
+          console.log()
+          navigate("/dashboard");
+        } else if (data.rol === "enfermero" || data.rol === "doctor") {
+          navigate("/patients");
+        }
+
+        }
+      );
     }
   }, [user]);
 
@@ -27,11 +47,8 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(userr.email, userr.password).then((a) => {
-        // useUser(a.user.uid);
         useUser(a.user.uid);
       });
-
-      navigate("/patients");
     } catch (error) {
       getError(error); //mando el error por parametro
     }

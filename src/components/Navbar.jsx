@@ -41,7 +41,7 @@ export default function Navbar() {
                         </button>
                         <button
                             className="bg-gray-100 shadow-lg p-6 w-full"
-                            onClick={() => navigate("/patients/dashboard")}
+                            onClick={() => navigate("/dashboard")}
                         >
                             Dashboard
                         </button>

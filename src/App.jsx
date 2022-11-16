@@ -36,7 +36,7 @@ export default function App() {
               }
             />
             <Route
-              path="/patients/dashboard"
+              path="/dashboard"
               element={
                 <ProtectedRoutes>
                   <Dashboard />

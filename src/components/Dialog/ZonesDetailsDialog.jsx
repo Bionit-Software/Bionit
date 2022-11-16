@@ -9,7 +9,6 @@ import BaseDialog from "./BaseDialog";
 
 export const ZonesDetailsDialog = NiceModal.create((props) => {
   const modal = useModal();
-  console.log(props.zoneId.id,"hola");
   return (
     <BaseDialog
       isOpen={modal.visible}
