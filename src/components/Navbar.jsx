@@ -1,17 +1,18 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 import {
   addNotificationDoc,
+  attendCall,
   useNotificationManager,
 } from "../hooks/useNotifications";
 import { useUser } from "../hooks/useUsers";
 export default function Navbar() {
   const { logout, user } = useAuth();
 
-  const { handleCall } = useNotificationManager({
+  const { handleCall, handleClick } = useNotificationManager({
     user: user,
   });
 
@@ -74,7 +75,7 @@ export default function Navbar() {
           Cerrar Sesión
         </button>
       </motion.div>
-      <ToastContainer />
+      <ToastContainer onClick={() => handleClick()} />
     </div>
   );
 }

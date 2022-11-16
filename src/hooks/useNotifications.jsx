@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { db } from "../db/database";
@@ -10,10 +10,25 @@ import { db } from "../db/database";
 
 export const useNotifications = () => {};
 
+export const attendCall = async (notificationId, user) => {
+  await updateDoc(doc(db, "notification", notificationId), {
+    status: "attended",
+    attendedAt: new Date(),
+    attendedBy: user.uid,
+  })
+    .then(() => {
+      console.log("notificacion atendida");
+    })
+    .catch((error) => {
+      console.error("Error atendiendo notificacion: ", error);
+    });
+};
+
 export const useNotificationManager = ({ user }) => {
   const [notificationID, setNotificationID] = React.useState("");
-  const handleCall = () => {
-    addNotificationDoc({
+
+  const handleCall = async () => {
+    await addNotificationDoc({
       type: "normal",
       status: "pending",
       from: user.uid,
@@ -24,37 +39,31 @@ export const useNotificationManager = ({ user }) => {
     });
 
     toast(<Notification id={notificationID} />, {
-      onClose: (props) => {
-        console.log("notificacion cerrada", props);
-      },
       position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,
-      closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
     });
   };
+  const handleClick = () => {
+    console.log("se toco el container alert", notificationID);
+    attendCall(notificationID, user);
+  };
 
-  return { handleCall };
+  return { handleCall, handleClick };
 };
 
 const Notification = ({ id }) => {
-  console.log(id);
   return (
     <div className="container flex flex-col gap-2">
-      <div className="container bg-red-500 text-white p-2 rounded-lg">
+      <div className="containertext-white rounded-lg">
         <p className="font-semibold">Llamada entrante</p>
         <p>Nombre del paciente</p>
       </div>
-      <div className="container flex gap-2">
-        <button className="bg-green-500 text-white p-2 rounded-lg">
-          Aceptar
-        </button>
-        <button className="bg-red-500 text-white p-2 rounded-lg">
-          Rechazar
-        </button>
+      <div className="container flex gap-2 ">
+        <span className="font-medium text-lg">Toque para atender</span>
       </div>
     </div>
   );
