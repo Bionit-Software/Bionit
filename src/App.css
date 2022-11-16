@@ -1,6 +1,7 @@
-#root{
-  font-family: 'Roboto', sans-serif;
+#root {
+  font-family: "Roboto", sans-serif;
   width: 100vw;
   height: 100vh;
   display: flex;
+  background-color: #404040;
 }
