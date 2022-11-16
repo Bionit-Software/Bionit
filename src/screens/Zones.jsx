@@ -13,12 +13,12 @@ export const Zones = () => {
     NiceModal.show(AddZoneDialog, {});
   };
 
-  const handleEditZone = (id,e) => {
+  const handleEditZone = (id) => {
     NiceModal.show(EditZoneDialog, { zoneId: id });
   };
 
-  const handleDetailsZone = (id,evt) => {
-    NiceModal.show(ZonesDetailsDialog, { zoneId: id });
+  const handleDetailsZone = (zone) => {
+    NiceModal.show(ZonesDetailsDialog, { zone: zone });
 
   };
   const { zones } = useZones();
