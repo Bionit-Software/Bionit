@@ -76,7 +76,7 @@ const AuthProvider = ({ children }) => {
         setErrorType("");
         break;
       default:
-        setErrorType("Error desconocido");
+        setErrorType("");
         break;
     }
   };

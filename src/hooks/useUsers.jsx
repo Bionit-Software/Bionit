@@ -40,7 +40,6 @@ export default function useUsers() {
 export const useEnfermeros = () => {
   const [enfermeros, setEnfermeros] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-
   React.useEffect(() => {
     const unsubscribe = onSnapshot(
       query(collection(db, "usuario"), where("rol", "==", "enfermero")),

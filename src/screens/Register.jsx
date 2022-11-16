@@ -32,6 +32,17 @@ export default function Register() {
           userData.email,
           userData.password
         ).then((a) => {
+          console.log(a)
+          if (rol === "enfermero") {
+            addDoc(collection(db, "usuario"), {
+              uid: a.user.uid,
+              nombre: userData.nombre,
+              apellido: userData.apellido,
+              email: userData.email,
+              rol: rol,
+              zonesId: [],
+            });
+          } else {
           addDoc(collection(db, "usuario"), {
             email: userData.email,
             nombre: userData.nombre,
@@ -39,6 +50,7 @@ export default function Register() {
             rol: rol,
             uid: a.user.uid,
           });
+        }
           navigate("/patients");
         });
       } else {
