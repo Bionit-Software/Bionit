@@ -8,8 +8,8 @@ import React from "react";
 
 export const DialogInput = ({ label, value, onChange }) => {
   return (
-    <div className="flex flex-col gap-2 ">
-      <label className="text-md font-medium">{label}</label>
+    <div className="flex flex-col gap-0 ">
+      <label className="text-sm text-white font-medium mb-0">{label}</label>
       <input
         type="text"
         className="bg-gray-200 rounded"

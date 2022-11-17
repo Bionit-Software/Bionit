@@ -3,6 +3,8 @@ import React from "react";
 import { editPatient } from "../../hooks/usePatients";
 import { useEnfermeros } from "../../hooks/useUsers";
 import { useZones } from "../../hooks/useZones";
+import Button from "../Button";
+import Chip from "../Chip";
 import { DialogInput } from "../DialogInput";
 import BaseDialog from "./BaseDialog";
 
@@ -51,9 +53,9 @@ export const EditPatientDialog = NiceModal.create(({ file }) => {
         modal.hide();
       }}
     >
-      <div className="flex flex-col bg-white rounded-md p-2 flex-wrap h-96 w-full min-w-full max-w-full z-10">
-        <h1>Editar paciente</h1>
-        <div>
+      <div className="flex flex-col rounded-md p-2 gap-2 flex-wrap h-11/12 w-full min-w-full max-w-full z-10">
+        <h1 className="text-white text-2xl font-bold">Editar paciente</h1>
+        <div className="flex flex-row w-96 gap-4 flex-wrap h-1/12 max-h-96">
           <DialogInput
             label="Nombre"
             value={patient.paciente.nombre}
@@ -67,6 +69,7 @@ export const EditPatientDialog = NiceModal.create(({ file }) => {
               });
             }}
           />
+
           <DialogInput
             label="Apellido"
             value={patient.paciente.apellido}
@@ -202,46 +205,44 @@ export const EditPatientDialog = NiceModal.create(({ file }) => {
             }}
           />
         </div>
-        <select
-          className="border border-gray-300 rounded-md p-2"
-          value={selectedZoneId}
-          onChange={(e) => setSelectedZoneId(e.target.value)}
-        >
-          <option value="" disabled defaultChecked>
-            Seleccione una zona
-          </option>
-          {zones.map((zone) => {
-            return (
-              <option value={zone.id} key={zone.id}>
-                {zone.name}
-              </option>
-            );
-          })}
-        </select>
+        <div className="flex flex-col py-2 gap-3">
+          <Chip>Nueva zona</Chip>
+          <select
+            className="text-lg font-medium w-full p-2 bg-background text-white border-2 border-primary border-opacity-60 rounded-lg px-4"
+            value={selectedZoneId}
+            onChange={(e) => setSelectedZoneId(e.target.value)}
+          >
+            <option value="" disabled defaultChecked>
+              Seleccione una zona
+            </option>
+            {zones.map((zone) => {
+              return (
+                <option value={zone.id} key={zone.id}>
+                  {zone.name}
+                </option>
+              );
+            })}
+          </select>
+          <Chip>Nuevo enfermero</Chip>
 
-        <select
-          className="border border-gray-300 rounded-md p-2"
-          value={selectedNurseId}
-          onChange={(e) => setSelectedNurseId(e.target.value)}
-        >
-          <option value="" disabled defaultChecked>
-            Seleccione un enfermero
-          </option>
-          {enfermeros.map((enfermero) => {
-            return (
-              <option value={enfermero.id} key={enfermero.id}>
-                {enfermero.nombre} {enfermero.apellido}
-              </option>
-            );
-          })}
-        </select>
-
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleEditPatient}
-        >
-          <span>Guardar</span>
-        </button>
+          <select
+            className="text-lg font-medium w-full p-2 bg-background text-white border-2 border-primary border-opacity-60 rounded-lg px-4"
+            value={selectedNurseId}
+            onChange={(e) => setSelectedNurseId(e.target.value)}
+          >
+            <option value="" disabled defaultChecked>
+              Seleccione un enfermero
+            </option>
+            {enfermeros.map((enfermero) => {
+              return (
+                <option value={enfermero.id} key={enfermero.id}>
+                  {enfermero.nombre} {enfermero.apellido}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <Button onClick={handleEditPatient}>Guardar</Button>
       </div>
     </BaseDialog>
   );

@@ -2,6 +2,10 @@ import NiceModal from "@ebay/nice-modal-react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect } from "react";
 import { deletePatient, useSinglePatientFile } from "../../hooks/usePatients";
+import Chip from "../Chip";
+// import DeleteIcon from "../../icons/DeleteIcon.jsx";
+// import EditIcon from "../../icons/EditIcon.jsx";
+import Button from "../Button";
 import BaseDialog from "./BaseDialog";
 import { EditPatientDialog } from "./EditPatientDialog";
 
@@ -31,36 +35,28 @@ const PatientDetailsDialog = NiceModal.create((props) => {
         modal.hide();
       }}
     >
-      <div className="bg-white w-96 p-4 px-6 rounded-md">
-        <h1>Ficha del paciente</h1>
-        <button
-          onClick={handleDeletePatient}
-          className="bg-red-500 hover:bg-red-700 p-3 px-2 text-white font-medium"
-        >
-          Eliminar
-        </button>
-        <button
-          onClick={handleEditfile}
-          className="bg-amber-500 hover:bg-amber-700 p-3 px-2 text-white font-medium"
-        >
-          editar
-        </button>
+      <div className="p-1 2 h-1/12 px-6 rounded-md">
+        <h1 className="text-white text-2xl font-bold">Ficha del paciente</h1>
+        <div className="flex ">
+          <Button onClick={handleDeletePatient}>Eliminar</Button>
+          <Button onClick={handleEditfile}>Editar</Button>
+        </div>
         <div className="flex flex-col gap-4 p-2 items-start">
-          <span>Id: {file?.id}</span>
-          <span>Nombre: {file?.paciente.nombre}</span>
-          <span>Apellido: {file?.paciente.apellido}</span>
-          <span>DNI: {file?.paciente.dni}</span>
-          <span>Telefono: {file?.paciente.telefono}</span>
-          <span>Direccion: {file?.paciente.direccion}</span>
-          <span>Fecha de nacimiento: {file?.paciente.fechaNacimiento}</span>
-          <span>Obra social: {file?.paciente.obraSocial}</span>
-          <span>Sexo: {file?.paciente.sexo}</span>
-          <span>Estado civil: {file?.paciente.estadoCivil}</span>
-          <span>
+          <Chip>Id: {file?.id}</Chip>
+          <Chip>Nombre: {file?.paciente.nombre}</Chip>
+          <Chip>Apellido: {file?.paciente.apellido}</Chip>
+          <Chip>DNI: {file?.paciente.dni}</Chip>
+          <Chip>Telefono: {file?.paciente.telefono}</Chip>
+          <Chip>Direccion: {file?.paciente.direccion}</Chip>
+          <Chip>Fecha de nacimiento: {file?.paciente.fechaNacimiento}</Chip>
+          <Chip>Obra social: {file?.paciente.obraSocial}</Chip>
+          <Chip>Sexo: {file?.paciente.sexo}</Chip>
+          <Chip>Estado civil: {file?.paciente.estadoCivil}</Chip>
+          <Chip>
             Antecedentes quirurgicos: {file?.paciente.antecedentesQuirurgicos}
-          </span>
-          <span>Alergias: {file?.paciente.alergias}</span>
-          <span>Grupo Sanguineo: {file?.paciente.grupoSanguineo}</span>
+          </Chip>
+          <Chip>Alergias: {file?.paciente.alergias}</Chip>
+          <Chip>Grupo Sanguineo: {file?.paciente.grupoSanguineo}</Chip>
         </div>
       </div>
     </BaseDialog>
