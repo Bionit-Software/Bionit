@@ -1,9 +1,11 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import { useAuth } from "../context/AuthContext";
 import { useNotifications } from "../context/NotificationsContext";
 
 export const Notifications = () => {
   const { notifications, UpdateNotificationStatus } = useNotifications();
+  const { user } = useAuth();
   const handleMarkAsDone = (id) => {
     UpdateNotificationStatus(id, "attended");
   };
@@ -16,6 +18,9 @@ export const Notifications = () => {
             notification.status == "pending" &&
             notification.type == "emergencia"
           ) {
+            if (notification.from === user.uid) {
+              return;
+            }
             return (
               <div className="bg-blue-400 w-full ">
                 <h1 className="text-white text-lg">Alerta azul</h1>
