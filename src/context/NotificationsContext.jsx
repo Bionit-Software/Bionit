@@ -63,7 +63,7 @@ export const NotificationsProvider = ({ children }) => {
           progress: undefined,
         }
       );
-    } else if (InstancePackage.type === "emergency") {
+    } else if (InstancePackage.type === "emergencia") {
       toast.error(InstancePackage.message, {
         position: "top-center",
         autoClose: 10000,
@@ -78,18 +78,28 @@ export const NotificationsProvider = ({ children }) => {
 
   const AddNewNotification = async (NotificationPackage) => {
     await addNotificationDoc({
-      type: "normal",
+      type: NotificationPackage.type,
       status: "pending",
       from: NotificationPackage.user.uid,
       createdAt: new Date(),
     })
       .then((id) => {
-        InstanceNewNotification({
-          type: "normal",
-          user: NotificationPackage.user,
-          notificationId: id,
-          message: `Llamado normal de ${NotificationPackage.patient} en ${NotificationPackage.zone} desde ${NotificationPackage.origin}`,
-        });
+        if (NotificationPackage.type === "normal") {
+          InstanceNewNotification({
+            type: NotificationPackage.type,
+            user: NotificationPackage.user,
+            notificationId: id,
+            message: `Llamado de ${NotificationPackage.patient} en ${NotificationPackage.zone} desde ${NotificationPackage.origin}`,
+          });
+        } else if (NotificationPackage.type === "emergencia") {
+          console.log("Saludos desde add new noti, el tipo es emergencia breo");
+          InstanceNewNotification({
+            type: NotificationPackage.type,
+            user: NotificationPackage.user,
+            notificationId: id,
+            message: `Alerta azul en zona: ${NotificationPackage.zone}`,
+          });
+        }
       })
       .catch((error) => {
         console.error("Error añadiendo notificacion: ", error);

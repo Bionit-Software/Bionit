@@ -30,21 +30,76 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
   };
 
   const handleCaller = () => {
-    if (selectedPatientId === "" || selectedZoneId === "") {
-      alert("Por favor seleccione paciente y zona");
-      return;
+    if (type === "emergencia") {
+      if (selectedZoneId === "") {
+        alert("Seleccione una zona");
+        return;
+      }
+      modal.hide();
+      onClose();
+      AddNewNotification({
+        type: "emergencia",
+        user: user,
+        zone: GetZoneName(selectedZoneId),
+      });
+    } else {
+      if (selectedPatientId === "" || selectedZoneId === "") {
+        alert("Por favor seleccione paciente y zona");
+        return;
+      }
+      modal.hide();
+      onClose();
+      AddNewNotification({
+        user: user,
+        type: type,
+        patient: GetPatientName(selectedPatientId),
+        zone: GetZoneName(selectedZoneId),
+        origin: selectedOrigin,
+      });
     }
-    modal.hide();
-    onClose();
-    AddNewNotification({
-      user: user,
-      type: type,
-      patient: GetPatientName(selectedPatientId),
-      zone: GetZoneName(selectedZoneId),
-      origin: selectedOrigin,
-    });
     // console.log(GetPatientName(selectedPatientId));
   };
+
+  if (type === "emergencia") {
+    return (
+      <BaseDialog
+        isOpen={modal.visible}
+        onClose={() => {
+          modal.hide();
+        }}
+      >
+        <div className="container flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <select
+              className="w-full p-2 rounded-md shadow-md"
+              value={selectedZoneId}
+              onChange={(e) => {
+                setSelectedZoneId(e.target.value);
+              }}
+            >
+              <option value="" disabled defaultChecked>
+                Zona del llamado
+              </option>
+              {zones?.map((zone) => {
+                return (
+                  <option key={zone.id} value={zone.id}>
+                    {zone.name}
+                  </option>
+                );
+              })}
+            </select>
+            <button
+              className="w-full p-2 rounded-md shadow-md bg-blue-500 text-white"
+              onClick={handleCaller}
+            >
+              Simular
+            </button>
+          </div>
+        </div>
+      </BaseDialog>
+    );
+  }
+
   return (
     <BaseDialog
       isOpen={modal.visible}
