@@ -1,20 +1,17 @@
+import NiceModal from "@ebay/nice-modal-react";
 import { motion } from "framer-motion";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
-import {
-  addNotificationDoc,
-  attendCall,
-  useNotificationManager,
-} from "../hooks/useNotifications";
 import { useUser } from "../hooks/useUsers";
+import { NotificationsDialog } from "./Dialog/NotificationsDialog";
 export default function Navbar() {
   const { logout, user } = useAuth();
 
-  const { handleCall, handleClick } = useNotificationManager({
-    user: user,
-  });
+  const handleNotification = () => {
+    NiceModal.show(NotificationsDialog, { user: user });
+  };
 
   const handleLogout = () => {
     logout();
@@ -63,7 +60,7 @@ export default function Navbar() {
         ) : null}
         <button
           className="bg-gray-100 shadow-lg p-6 w-full"
-          onClick={handleCall}
+          onClick={handleNotification}
         >
           Simular Llamada
         </button>
@@ -75,7 +72,6 @@ export default function Navbar() {
           Cerrar Sesión
         </button>
       </motion.div>
-      <ToastContainer onClick={() => handleClick()} />
     </div>
   );
 }
