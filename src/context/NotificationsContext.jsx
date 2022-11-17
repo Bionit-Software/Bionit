@@ -82,6 +82,14 @@ export const NotificationsProvider = ({ children }) => {
       status: "pending",
       from: NotificationPackage.user.uid,
       createdAt: new Date(),
+      ...(NotificationPackage.type === "emergencia" && {
+        zone: NotificationPackage.zone,
+      }),
+      ...(NotificationPackage.type === "normal" && {
+        patient: NotificationPackage.patient,
+        zone: NotificationPackage.zone,
+        origin: NotificationPackage.origin,
+      }),
     })
       .then((id) => {
         if (NotificationPackage.type === "normal") {
@@ -106,9 +114,22 @@ export const NotificationsProvider = ({ children }) => {
       });
   };
 
+  const [notifications, setNotifications] = React.useState([]);
+
+  React.useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "notification"), (query) => {
+      const docs = [];
+      query.forEach((doc) => {
+        docs.push({ ...doc.data(), id: doc.id });
+      });
+      setNotifications(docs);
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <NotificationsContext.Provider
-      value={{ InstanceNewNotification, AddNewNotification }}
+      value={{ InstanceNewNotification, AddNewNotification, notifications }}
     >
       {children}
       <ToastContainer />

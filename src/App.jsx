@@ -8,6 +8,7 @@ import { NotificationsProvider } from "./context/NotificationsContext";
 import "./index.css";
 import Dashboard from "./screens/Dashboard";
 import Login from "./screens/Login";
+import { Notifications } from "./screens/Notifications";
 import { Patients } from "./screens/Patients";
 import Register from "./screens/Register";
 import { Zones } from "./screens/Zones";
@@ -42,6 +43,14 @@ export default function App() {
                 element={
                   <ProtectedRoutes>
                     <Dashboard />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="/notifications"
+                element={
+                  <ProtectedRoutes>
+                    <Notifications />
                   </ProtectedRoutes>
                 }
               />
