@@ -5,6 +5,7 @@ import { useEnfermeros } from "../../hooks/useUsers";
 import BaseDialog from "./BaseDialog";
 import { motion } from "framer-motion";
 import EnfermerosListDialog from "./EnfermerosListDialog";
+import PacientesListDialog from "./PacientesListDialog";
 
 export const ZonesDetailsDialog = NiceModal.create((props) => {
   const { enfermeros } = useEnfermeros();
@@ -56,9 +57,26 @@ export const ZonesDetailsDialog = NiceModal.create((props) => {
                   }}
                   on
                   className="text-lg text-white rounded-full 
-               bg-teal-600 w-4/6 h-10 font-semibold"
+               bg-green-600 w-4/6 h-10 font-semibold"
                 >
                   Añadir enfermero
+                </button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="gap-4 flex justify-center mt-5 mb-5"
+              >
+                <button
+                  onClick={() => {
+                    NiceModal.show(PacientesListDialog, { zone: props.zone })
+                    modal.hide();
+                  }}
+                  on
+                  className="text-lg text-white rounded-full 
+               bg-green-600 w-4/6 h-10 font-semibold"
+                >
+                  Añadir paciente
                 </button>
               </motion.div>
           </div>
