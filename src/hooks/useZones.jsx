@@ -27,6 +27,19 @@ export function useZones() {
   return { zones };
 }
 
+export function useSingleZone(id) {
+  const [zone, setZone] = React.useState(null);
+  React.useEffect(() => {
+    const unsub = onSnapshot(doc(db, "zones", id), (doc) => {
+      setZone({ id: doc.id, ...doc.data() });
+    });
+    return () => {
+      unsub();
+    };
+  }, [id]);
+  return { zone };
+}
+
 export const addZone = async (zoneName, zoneDescription) => {
   await addDoc(collection(db, "zones"), {
     name: zoneName,
