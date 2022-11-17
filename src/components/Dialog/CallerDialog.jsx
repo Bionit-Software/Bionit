@@ -41,6 +41,7 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
         type: "emergencia",
         user: user,
         zone: GetZoneName(selectedZoneId),
+        zoneId: selectedZoneId,
       });
     } else {
       if (selectedPatientId === "" || selectedZoneId === "") {
@@ -54,6 +55,7 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
         type: type,
         patient: GetPatientName(selectedPatientId),
         zone: GetZoneName(selectedZoneId),
+        zoneId: selectedZoneId,
         origin: selectedOrigin,
       });
     }

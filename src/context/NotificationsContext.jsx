@@ -85,10 +85,12 @@ export const NotificationsProvider = ({ children }) => {
       createdAt: new Date(),
       ...(NotificationPackage.type === "emergencia" && {
         zone: NotificationPackage.zone,
+        zoneId: NotificationPackage.zoneId,
       }),
       ...(NotificationPackage.type === "normal" && {
         patient: NotificationPackage.patient,
         zone: NotificationPackage.zone,
+        zoneId: NotificationPackage.zoneId,
         origin: NotificationPackage.origin,
       }),
     })
