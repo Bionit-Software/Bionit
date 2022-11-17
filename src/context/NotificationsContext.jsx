@@ -2,12 +2,14 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
 import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { db } from "../db/database";
+import GetDateDiffInSeconds from "../helpers/getDateDiff";
 import { useSinglePatientFile } from "../hooks/usePatients";
 
 const NotificationsContext = React.createContext();
@@ -32,7 +34,7 @@ export const NotificationsProvider = ({ children }) => {
       attendedBy: user.uid,
     })
       .then(() => {
-        console.log("notificacion atendida");
+        console.log("Resolved Notification successfully!");
       })
       .catch((error) => {
         console.error("Error atendiendo notificacion: ", error);
