@@ -56,3 +56,36 @@ export const useEnfermeros = () => {
   }, []);
   return { enfermeros, loading };
 };
+
+export const eliminarEnfermero = async (zona, id) => {
+  React.useEffect(() => {
+    const docRef = doc(db, "usuario", id);
+    const unsubscribeZoneUser = onSnapshot(docRef, (doc) => {
+      doc.data().zonesId.forEach((zonaId) => {
+        if (zonaId === zona) {
+          console.log(zonaId, "zonaId");
+          console.log(zona, "zona");
+          updateDoc(docRef, {
+            zonesId: arrayRemove(zonaId),
+          });
+        }
+      });
+    });
+  }, []);
+  return { eliminarEnfermero };
+};
+
+export const eliminarEnfermeroZona = async (zona) => {
+  React.useEffect(() => {
+    const docZone = doc(db, "zones", zona);
+    const unsubscribeZone = onSnapshot(docZone, (doc) => {
+      doc.data().nurses.forEach((enfermeroId) => {
+        console.log(enfermeroId, "enfermeroId");
+        updateDoc(docZone, {
+          nurses: arrayRemove(enfermeroId),
+        });
+      });
+    });
+  }, []);
+  return { eliminarEnfermeroZona };
+}

@@ -1,5 +1,4 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import React, { useEffect } from "react";
 import { db } from "../../db/database";
 import { useEnfermeros } from "../../hooks/useUsers";
@@ -10,26 +9,6 @@ import EnfermerosListDialog from "./EnfermerosListDialog";
 export const ZonesDetailsDialog = NiceModal.create((props) => {
   const { enfermeros } = useEnfermeros();
   const [enfermeroZona, setEnfermeroZona] = React.useState("");
-  // const submitChange = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await updateDoc(doc(db, "zones", props.zone.id), {
-  //       nurses: arrayUnion(enfermeroZona),
-  //     });
-  //     //buscar colleccion de usuario, filtrar por uid y agregarle el id de la zona al array de zonas
-  //     const q = query(collection(db, "usuario"), where("uid", "==", enfermeroZona));
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.forEach((docc) => {
-  //       updateDoc(doc(db, "usuario", docc.id), {
-  //         zonesId: arrayUnion(props.zone.id),
-  //       });
-  //       console.log(docc.id, " => ", docc.data());
-  //     });
-  //     modal.hide();
-  //   } catch (error) {
-  //     console.log(error); //mando el error por parametro
-  //   }
-  // };
 
   const modal = useModal();
   return (
@@ -39,7 +18,7 @@ export const ZonesDetailsDialog = NiceModal.create((props) => {
         modal.hide();
       }}
     >
-      <div className="bg-white w-full p-4 px-6 rounded-md container flex flex-col gap-6">
+      <div className="bg-white container h-full p-4 px-6 rounded-md flex flex-col gap-6">
         <div className="flex justify-between items-center">
           <div className="text-2xl font-bold">Detalles de la zona</div>
           <button
@@ -65,25 +44,16 @@ export const ZonesDetailsDialog = NiceModal.create((props) => {
             <div className="text-gray-400">{props.zone.description}</div>
           </div>
           <div className="items-center w-full">
-            {/* {enfermeroZona === "" && (
-              <div className="gap-4 flex justify-center mt-5 mb-5">
-                <div
-                  className="text-lg text-white rounded-full bg-gray-400 cursor-not-allowed
-                          w-4/6 h-10 font-semibold
-                         align-middle flex justify-center items-center"
-                >
-                  Seleccione Enfermero...
-                </div>
-              </div>
-            )} */}
-            {enfermeroZona === "" && (
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="gap-4 flex justify-center mt-5 mb-5"
               >
                 <button
-                  onClick={() => NiceModal.show(EnfermerosListDialog, { zone: props.zone })}
+                  onClick={() => {
+                    NiceModal.show(EnfermerosListDialog, { zone: props.zone })
+                    modal.hide();
+                  }}
                   on
                   className="text-lg text-white rounded-full 
                bg-teal-600 w-4/6 h-10 font-semibold"
@@ -91,7 +61,6 @@ export const ZonesDetailsDialog = NiceModal.create((props) => {
                   Añadir enfermero
                 </button>
               </motion.div>
-            )}
           </div>
         </div>
       </div>

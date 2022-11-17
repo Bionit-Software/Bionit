@@ -10,6 +10,7 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import { Zones } from "./screens/Zones";
 import { Patients } from "./screens/Patients";
+import EnfermerosListDialog from "./components/Dialog/EnfermerosListDialog";
 export default function App() {
   return (
     <NiceModal.Provider>
@@ -40,6 +41,14 @@ export default function App() {
               element={
                 <ProtectedRoutes>
                   <Dashboard />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoutes>
+                  <EnfermerosListDialog />
                 </ProtectedRoutes>
               }
             />
