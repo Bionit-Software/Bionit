@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const BaseDialog = ({ isOpen, onClose, children }) => {
   return (
     <Dialog open={isOpen} onClose={onClose}>
-      <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30" />
+      <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-60" />
       <motion.div
         initial={{ opacity: 0, scale: 0.5, y: -100 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -18,8 +18,8 @@ const BaseDialog = ({ isOpen, onClose, children }) => {
         <div className="flex min-h-full items-center justify-center p-4 text-center">
           <Dialog.Panel
             className="w-full max-w-md transform overflow-hidden rounded-2xl
-           bg-white p-6 text-left align-middle shadow-xl
-            transition-all"
+          p-6 text-left align-middle
+            transition-all bg-background"
           >
             {children}
           </Dialog.Panel>

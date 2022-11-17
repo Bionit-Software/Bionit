@@ -34,7 +34,16 @@ export const NotificationsProvider = ({ children }) => {
       attendedBy: user.uid,
     })
       .then(() => {
-        console.log("Resolved Notification successfully!");
+        getDoc(doc(db, "notification", notificationId)).then((docReference) => {
+          console.log("holi");
+          const attendedAt = docReference.data().attendedAt;
+          const createdAt = docReference.data().createdAt;
+
+          //update the notificationn docuemnt
+          updateDoc(doc(db, "notification", notificationId), {
+            diffTime: GetDateDiffInSeconds(createdAt, attendedAt),
+          });
+        });
       })
       .catch((error) => {
         console.error("Error atendiendo notificacion: ", error);
@@ -67,15 +76,30 @@ export const NotificationsProvider = ({ children }) => {
         }
       );
     } else if (InstancePackage.type === "emergencia") {
-      toast.error(InstancePackage.message, {
-        position: "top-center",
-        autoClose: 10000,
-        type: "warning",
-        hideProgressBar: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(
+        <div className="flex gap-4 flex-col">
+          {InstancePackage.message}
+          <button
+            onClick={() =>
+              ResolveNotification(
+                InstancePackage.user,
+                InstancePackage.notificationId
+              )
+            }
+          >
+            Atender
+          </button>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: 10000,
+          type: "warning",
+          hideProgressBar: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
     }
   };
 
@@ -144,6 +168,7 @@ export const NotificationsProvider = ({ children }) => {
         AddNewNotification,
         notifications,
         UpdateNotificationStatus,
+        ResolveNotification,
       }}
     >
       {children}

@@ -1,9 +1,9 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
+import { motion } from "framer-motion";
 import React, { useEffect } from "react";
 import { db } from "../../db/database";
 import { useEnfermeros } from "../../hooks/useUsers";
 import BaseDialog from "./BaseDialog";
-import { motion } from "framer-motion";
 import EnfermerosListDialog from "./EnfermerosListDialog";
 import PacientesListDialog from "./PacientesListDialog";
 
@@ -19,70 +19,55 @@ export const ZonesDetailsDialog = NiceModal.create((props) => {
         modal.hide();
       }}
     >
-      <div className="bg-white container h-full p-4 px-6 rounded-md flex flex-col gap-6">
+      <div className="p-4 px-6 rounded-md flex flex-col gap-6">
         <div className="flex justify-between items-center">
-          <div className="text-2xl font-bold">Detalles de la zona</div>
-          <button
-            className="text-gray-400"
-            onClick={() => {
-              modal.hide();
-            }}
-          >
-            X
-          </button>
+          <div className="text-2xl font-bold text-white">
+            Detalles de la zona
+          </div>
         </div>
         <div className="container flex flex-col gap-4">
-          <div className="flex justify-between items-center">
-            <div className="text-xl font-bold">Nombre zona</div>
-            <div className="text-gray-400">{props.zone.name}</div>
+          <div className="flex  gap-4 items-center text-white">
+            <div className="text-xl font-bold">Nombre: </div>
+            <div className="text-xl font-semibold">{props.zone.name}</div>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="text-xl font-bold">Id</div>
-            <div className="text-gray-400">{props.zone.id}</div>
+          <div className="flex justify-between items-center flex-wrap text-white">
+            <div className="text-xl font-bold">Descripción:</div>
+            <div className="text-xl font-semibold">
+              {props.zone.description}
+            </div>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="text-xl font-bold">Descripción</div>
-            <div className="text-gray-400">{props.zone.description}</div>
-          </div>
-          <div className="items-center w-full">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="gap-4 flex justify-center mt-5 mb-5"
-              >
-                <button
-                  onClick={() => {
-                    NiceModal.show(EnfermerosListDialog, { zone: props.zone })
-                    modal.hide();
-                  }}
-                  on
-                  className="text-lg text-white rounded-full 
-               bg-green-600 w-4/6 h-10 font-semibold"
-                >
-                  Añadir enfermero
-                </button>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="gap-4 flex justify-center mt-5 mb-5"
-              >
-                <button
-                  onClick={() => {
-                    NiceModal.show(PacientesListDialog, { zone: props.zone })
-                    modal.hide();
-                  }}
-                  on
-                  className="text-lg text-white rounded-full 
-               bg-green-600 w-4/6 h-10 font-semibold"
-                >
-                  Añadir paciente
-                </button>
-              </motion.div>
+          <div className="flex flex-row w-full items-center gap-5">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                NiceModal.show(EnfermerosListDialog, { zone: props.zone });
+                modal.hide();
+              }}
+              on
+              className="text-lg text-white rounded-lg
+               bg-primary hover:bg-primary_hover w-4/6 h-10 font-semibold"
+            >
+              Añadir enfermero
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                NiceModal.show(PacientesListDialog, { zone: props.zone });
+                modal.hide();
+              }}
+              on
+              className="text-lg text-white rounded-lg
+              bg-primary hover:bg-primary_hover w-4/6 h-10 font-semibold"
+            >
+              Añadir paciente
+            </motion.button>
           </div>
         </div>
       </div>
-    </BaseDialog >
+    </BaseDialog>
   );
 });
 export default ZonesDetailsDialog;

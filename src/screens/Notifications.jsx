@@ -4,10 +4,10 @@ import { useAuth } from "../context/AuthContext";
 import { useNotifications } from "../context/NotificationsContext";
 
 export const Notifications = () => {
-  const { notifications, UpdateNotificationStatus } = useNotifications();
+  const { notifications, ResolveNotification } = useNotifications();
   const { user } = useAuth();
   const handleMarkAsDone = (id) => {
-    UpdateNotificationStatus(id, "attended");
+    ResolveNotification(user, id);
   };
   return (
     <div className="container h-full w-full flex">

@@ -43,6 +43,7 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
         zone: GetZoneName(selectedZoneId),
         zoneId: selectedZoneId,
       });
+      setSelectedZoneId("");
     } else {
       if (selectedPatientId === "" || selectedZoneId === "") {
         alert("Por favor seleccione paciente y zona");
