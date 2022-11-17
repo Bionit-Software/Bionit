@@ -22,6 +22,9 @@ export default function Navbar() {
 
   return (
     <div className="container h-full w-2/12 p-2 shadow-lg">
+      <div className="container mb-8">
+        Bionit Logo
+      </div>
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -30,53 +33,63 @@ export default function Navbar() {
           delay: 0.6,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="container flex flex-col gap-6"
-      >
-        <button
-          className="bg-gray-100 shadow-lg p-6 w-full"
-          onClick={() => {
-            navigate("/patients");
-          }}
-        >
-          PACIENTES
-        </button>
+        className="container flex flex-col gap-6">
         {userData?.rol === "admin" ? (
+          <div className="container">
+            Analisis
+            <div className="container flex flex-col gap-6">
+              <button
+                className="bg-gray-100 shadow-lg p-6 w-full"
+                onClick={() => navigate("/dashboard")}>
+                Dashboard
+              </button>
+            </div>
+          </div>
+        ) : null}
+        <div className="container">
+          Gestión
+          <div className="container flex flex-col gap-6">
+            {userData?.rol === "admin" ? (
+              <button
+                className="bg-gray-100 shadow-lg p-6 w-full"
+                onClick={() => {
+                  navigate("/zones");
+                }}>
+                Zonas
+              </button>
+            ) : null}
+            <button
+              className="bg-gray-100 shadow-lg p-6 w-full"
+              onClick={() => {
+                navigate("/patients");
+              }}>
+              Fichas
+            </button>
+            {userData?.rol === "admin" ? (
+              <button
+                className="bg-gray-100 shadow-lg p-6 w-full"
+                onClick={() => {
+                  navigate("/notifications");
+                }}>
+                Notificaciones
+              </button>
+            ) : null}
+          </div>
+        </div>
+        <div className="container">
+          Simulación
           <div className="container flex flex-col gap-6">
             <button
               className="bg-gray-100 shadow-lg p-6 w-full"
-              onClick={() => {
-                navigate("/zones");
-              }}
-            >
-              Zonas
-            </button>
-            <button
-              className="bg-gray-100 shadow-lg p-6 w-full"
-              onClick={() => {
-                navigate("/notifications");
-              }}
-            >
-              Notificaciones
-            </button>
-            <button
-              className="bg-gray-100 shadow-lg p-6 w-full"
-              onClick={() => navigate("/dashboard")}
-            >
-              Dashboard
+              onClick={handleNotification}>
+              Llamado
             </button>
           </div>
-        ) : null}
-        <button
-          className="bg-gray-100 shadow-lg p-6 w-full"
-          onClick={handleNotification}
-        >
-          Simular Llamada
-        </button>
+        </div>
         <button
           onClick={handleLogout}
           className="bg-red-500 shadow-lg shadow-red-500/50 text-white w-full 
-                    font-semibold rounded-lg p-6 "
-        >
+                    font-semibold rounded-lg p-6 ">
           Cerrar Sesión
         </button>
       </motion.div>

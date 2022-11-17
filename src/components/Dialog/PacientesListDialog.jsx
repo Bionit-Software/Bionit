@@ -54,7 +54,7 @@ export const PacientesListDialog = NiceModal.create((props) => {
                         <option value="">Selecciona un Paciente...</option>
                         {files?.map((paciente) => {
                             if (!props.zone.patients.includes(paciente.id)) {
-                                return <option value={paciente.id}>{paciente.paciente.nombre}</option>;
+                                return <option key={paciente.id} value={paciente.id}>{paciente.paciente.nombre}</option>;
                             }
                         })}
                     </select>
