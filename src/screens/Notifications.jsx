@@ -18,9 +18,6 @@ export const Notifications = () => {
             notification.status == "pending" &&
             notification.type == "emergencia"
           ) {
-            if (notification.from === user.uid) {
-              return;
-            }
             return (
               <div className="bg-blue-400 w-full ">
                 <h1 className="text-white text-lg">Alerta azul</h1>
@@ -38,9 +35,6 @@ export const Notifications = () => {
             notification.status == "pending" &&
             notification.type == "normal"
           ) {
-            if (notification.from === user.uid) {
-              return;
-            }
             return (
               <div className="bg-blue-400 w-full ">
                 <h1 className="text-white text-lg">Llamado recibido</h1>
