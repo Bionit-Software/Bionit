@@ -24,6 +24,7 @@ export const addNotificationDoc = (notification) => {
 };
 
 export const NotificationsProvider = ({ children }) => {
+  const [notifications, setNotifications] = React.useState([]);
   const ResolveNotification = async (user, notificationId) => {
     await updateDoc(doc(db, "notification", notificationId), {
       status: "attended",
@@ -114,8 +115,6 @@ export const NotificationsProvider = ({ children }) => {
       });
   };
 
-  const [notifications, setNotifications] = React.useState([]);
-
   React.useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "notification"), (query) => {
       const docs = [];
@@ -127,9 +126,21 @@ export const NotificationsProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
+  const UpdateNotificationStatus = async (notificationId, newStatus) => {
+    await updateDoc(doc(db, "notification", notificationId), {
+      status: newStatus,
+      attendedAt: new Date(),
+    });
+  };
+
   return (
     <NotificationsContext.Provider
-      value={{ InstanceNewNotification, AddNewNotification, notifications }}
+      value={{
+        InstanceNewNotification,
+        AddNewNotification,
+        notifications,
+        UpdateNotificationStatus,
+      }}
     >
       {children}
       <ToastContainer />
