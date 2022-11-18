@@ -6,11 +6,12 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import {db} from "../db/database";
+import { db } from "../db/database";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useUser } from "../hooks/useUsers";
+import Bionit from "../assets/Bionit.png";
 
 export default function Login() {
   const { login, getError, errorType, user } = useAuth();
@@ -19,19 +20,19 @@ export default function Login() {
     password: "",
   });
 
-  useEffect( () => {
+  useEffect(() => {
     if (user) {
       onSnapshot(
-        query(collection(db, "usuario"), where("uid", "==", user.uid )),
+        query(collection(db, "usuario"), where("uid", "==", user.uid)),
         (querySnapshot) => {
-        const data = querySnapshot.docs[0].data();
-        console.log(data)
-        if (data.rol === "admin") {
-          console.log()
-          navigate("/dashboard");
-        } else if (data.rol === "enfermero" || data.rol === "doctor") {
-          navigate("/patients");
-        }
+          const data = querySnapshot.docs[0].data();
+          console.log(data)
+          if (data.rol === "admin") {
+            console.log()
+            navigate("/dashboard");
+          } else if (data.rol === "enfermero" || data.rol === "doctor") {
+            navigate("/patients");
+          }
 
         }
       );
@@ -61,86 +62,91 @@ export default function Login() {
   };
 
   return (
-    <div className="container mx-auto">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.5,
-          delay: 0.3,
-          ease: [0, 0.71, 0.2, 1.01],
-        }}
-        className="container mx-auto p-10 pt-4"
-      >
-        <p className="text-center text-3xl text-slate-700 font-semibold">
-          Inicio de Sesión
-        </p>
-        {errorType && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.3,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
-            className="text-center text-lg text-rose-800 font-semibold"
-          >
-            {errorType}
-          </motion.div>
-        )}
-        <div className="justify-center">
-          <label>Correo Electrónico</label>
-          <input
-            type="text"
-            name="email"
-            placeholder="Ingrese correo electrónico"
-            className="rounded-lg p-2 w-full border border-neutral-400"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Ingrese contraseña"
-            className="rounded-lg p-2 w-full border border-neutral-400"
-            onChange={handleChange}
-          />
+    <div className="w-screen h-screen tracking-wide text-lg grid grid-cols-2 background-gradient">
+      <div></div>
+      <div className="ml-auto font-semibold pr-12 pl-12">
+        <div className="text-white text-6xl flex justify-end gap-6 mb-20 pt-4">
+          <p className="text-right">Bionit</p>
+          <img src={Bionit} alt="" />
         </div>
         <motion.div
-          className="gap-4 flex justify-center mt-10 mb-5"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.3,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+          className="container mr-12 pr-8"
         >
-          <button
-            onClick={handleSubmit}
-            className="text-lg text-white rounded-full 
-                    bg-teal-600 w-4/6 h-10 font-semibold"
-          >
-            Iniciar sesión
-          </button>
+          <p className="text-center text-4xl text-white font-semibold mb-8">
+            Inicio de sesión
+          </p>
+          {errorType && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.3,
+                ease: [0, 0.71, 0.2, 1.01],
+              }}
+              className="text-center text-xl text-rose-800 font-semibold"
+            >
+              {errorType}
+            </motion.div>
+          )}
+          <div className="justify-center text-white mb-8">
+            <label>Correo Electrónico</label>
+            <input
+              type="text"
+              name="email"
+              placeholder="Ingrese Correo Electrónico..."
+              className="rounded-full bg-input h-12 pl-4 w-full "
+              onChange={handleChange}
+            />
+          </div>
+          <div className="text-white mb-8">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Ingrese Contraseña..."
+              className="rounded-full bg-input h-12 pl-4 w-full "
+              onChange={handleChange}
+            />
+          </div>
+          <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="gap-4 flex justify-center mt-10 mb-5"
+            >
+              <button
+                onClick={handleSubmit}
+                className="text-xl text-white rounded-full btn-gradient w-full h-12 font-semibold shadow-lg shadow-red-500/30 hover:shadow-red-500/50"
+              >
+                Iniciar Sesión
+              </button>
+            </motion.div>
+          <div className="flex justify-center gap-4 text-white mt-12 mb-5">
+            <p>
+              No tenes cuenta?
+            </p>
+            <p
+              className="text-primary"
+              onClick={() => submitRegister()}
+              style={{
+                fontSize: "18px",
+                fontWeight: "600",
+                cursor: "pointer",
+              }}
+            >
+              Registrate
+            </p>
+          </div>
         </motion.div>
-        <div className="gap-4 justify-items-center flex justify-center ">
-          <p
-            style={{ color: "#121212c4", fontSize: "18px", fontWeight: "400" }}
-          >
-            No tenés cuenta?
-          </p>
-          <p
-            onClick={() => submitRegister()}
-            style={{
-              color: "#078282",
-              fontSize: "18px",
-              fontWeight: "600",
-              cursor: "pointer",
-            }}
-          >
-            Registrate
-          </p>
-        </div>
-      </motion.div>
+      </div>
     </div>
+
   );
 }

@@ -6,3 +6,12 @@
   background: linear-gradient(114.3deg, #272727 2.91%, #353130 95.88%);
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
+.background-gradient {
+  background: rgb(240,115,62);
+  background: linear-gradient(132deg, rgba(240,115,62,1) 0%, rgba(201,86,37,1) 7%, rgba(55,48,47,1) 50%);
+}
+
+.btn-gradient {
+  background: rgb(240,83,62);
+  background: linear-gradient(132deg, rgba(240,83,62,1) 0%, rgba(235,75,53,1) 77%, rgba(229,66,44,1) 100%);}
