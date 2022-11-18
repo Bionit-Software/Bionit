@@ -1,4 +1,5 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import Chart from "chart.js/auto";
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { VictoryPie } from "victory";

@@ -3,6 +3,7 @@ import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HorizontalZonePoblationChart from "../components/Charts/HorizontalZonePoblationChart";
+import NotificationsHistorial from "../components/Charts/NotificationsHistorial";
 import NotificationsPieChart from "../components/Charts/NotificationsPieChart";
 import ZonesBarChart from "../components/Charts/ZonesBarChart";
 import EntityCard from "../components/EntityCard";
@@ -14,7 +15,7 @@ export default function Dashboard() {
   return (
     <Layout>
       <PageTitle title="Dashboard" />
-      <div className="flex grow p-4 flex-row">
+      <div className="flex grow p-4 flex-row gap-x-4">
         <div className="flex w-1/2 flex-col gap-12">
           <ZonesBarChart />
           <div className="flex flex-row">
@@ -26,8 +27,9 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex w-1/2 flex-col">
+        <div className="flex w-1/2 flex-col gap-y-4">
           <HorizontalZonePoblationChart />
+          <NotificationsHistorial />
         </div>
       </div>
     </Layout>

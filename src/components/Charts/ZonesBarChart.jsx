@@ -16,22 +16,22 @@ import { useZones } from "../../hooks/useZones";
 ChartJS.register(BarController, BarElement, CategoryScale);
 export default function ZonesBarChart() {
   const { zones } = useZones();
-  console.log(zones.map((zone) => zone.notifications.length));
+
   const data = {
-    labels: zones.map((zone) => zone.name),
+    labels: zones.map((zone) => {
+      if (zone.notifications) {
+        return zone.name;
+      }
+    }),
     datasets: [
       {
-        label: false,
-        data: zones.map((zone) => zone.notifications.length),
-        backgroundColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(255, 205, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(201, 203, 207, 1)",
-        ],
+        label: "Notificaciones",
+        data: zones.map((zone) => {
+          if (zone.notifications) {
+            return zone.notifications.length;
+          }
+        }),
+        backgroundColor: ["rgba(240, 83, 62, 0.8)"],
         borderWidth: 0,
       },
     ],

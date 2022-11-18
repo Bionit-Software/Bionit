@@ -201,6 +201,21 @@ export const NotificationsProvider = ({ children }) => {
   );
 };
 
+export const useSingleNotification = (notificationId) => {
+  const [notification, setNotification] = React.useState(null);
+  React.useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(db, "notification", notificationId),
+      (doc) => {
+        console.log("hook", doc.data(), notificationId);
+        setNotification({ ...doc.data(), id: doc.id });
+      }
+    );
+    return unsubscribe;
+  }, [notificationId]);
+  return { notification };
+};
+
 export const useNotifications = () => {
   const context = React.useContext(NotificationsContext);
   if (!context) {
