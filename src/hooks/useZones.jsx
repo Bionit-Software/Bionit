@@ -15,7 +15,11 @@ export function useZones() {
     const unsub = onSnapshot(collection(db, "zones"), (querySnapshot) => {
       const zones = [];
       querySnapshot.forEach((doc) => {
-        zones.push({ id: doc.id, ...doc.data() });
+        zones.push({
+          totalPoblation: doc.data().nurses.length + doc.data().patients.length,
+          id: doc.id,
+          ...doc.data(),
+        });
       });
       setZones(zones);
     });

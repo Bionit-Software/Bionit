@@ -2,6 +2,7 @@ import { arrayUnion, updateDoc } from "firebase/firestore";
 import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import HorizontalZonePoblationChart from "../components/Charts/HorizontalZonePoblationChart";
 import NotificationsPieChart from "../components/Charts/NotificationsPieChart";
 import ZonesBarChart from "../components/Charts/ZonesBarChart";
 import EntityCard from "../components/EntityCard";
@@ -25,7 +26,9 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex w-1/2 flex-col"></div>
+        <div className="flex w-1/2 flex-col">
+          <HorizontalZonePoblationChart />
+        </div>
       </div>
     </Layout>
   );
