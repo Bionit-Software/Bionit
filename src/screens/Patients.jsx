@@ -29,6 +29,15 @@ export const Patients = () => {
         <PageTitle title="Fichas de pacientes" />
         <Button onClick={handleAddPatient}>Añadir paciente</Button>
         <div className="p-4 px-0 flex flex-col gap-6">
+          {files.length == 0 ? (
+            <div>
+              <h1 className="text-2xl font-bold text-white">
+                No hay fichas de pacientes registradas
+              </h1>
+            </div>
+          ) : (
+            <></>
+          )}
           {loading ? (
             <div>Loading...</div>
           ) : (

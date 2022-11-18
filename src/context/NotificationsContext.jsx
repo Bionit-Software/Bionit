@@ -1,5 +1,6 @@
 import {
   addDoc,
+  arrayUnion,
   collection,
   doc,
   getDoc,
@@ -27,6 +28,10 @@ export const addNotificationDoc = (notification) => {
 
 export const NotificationsProvider = ({ children }) => {
   const [notifications, setNotifications] = React.useState([]);
+  const [attendedNotifications, setAttendedNotifications] = React.useState([]);
+  const [unattendedNotifications, setUnattendedNotifications] = React.useState(
+    []
+  );
   const ResolveNotification = async (user, notificationId) => {
     await updateDoc(doc(db, "notification", notificationId), {
       status: "attended",
@@ -137,7 +142,14 @@ export const NotificationsProvider = ({ children }) => {
             message: `Alerta azul en zona: ${NotificationPackage.zone}`,
           });
         }
+        updateDoc(doc(db, "zones", NotificationPackage.zoneId), {
+          notifications: arrayUnion({
+            type: NotificationPackage.type,
+            notificationId: id,
+          }),
+        });
       })
+      .then(() => {})
       .catch((error) => {
         console.error("Error añadiendo notificacion: ", error);
       });
@@ -146,10 +158,20 @@ export const NotificationsProvider = ({ children }) => {
   React.useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "notification"), (query) => {
       const docs = [];
+      const attendedNotification = [];
+      const notAttendedNotification = [];
       query.forEach((doc) => {
+        if (doc.data().status === "attended") {
+          attendedNotification.push(doc.data());
+        } else if (doc.data().status === "pending") {
+          notAttendedNotification.push(doc.data());
+        }
+
         docs.push({ ...doc.data(), id: doc.id });
       });
       setNotifications(docs);
+      setAttendedNotifications(attendedNotification);
+      setUnattendedNotifications(notAttendedNotification);
     });
     return unsubscribe;
   }, []);
@@ -167,6 +189,8 @@ export const NotificationsProvider = ({ children }) => {
         InstanceNewNotification,
         AddNewNotification,
         notifications,
+        attendedNotifications,
+        unattendedNotifications,
         UpdateNotificationStatus,
         ResolveNotification,
       }}

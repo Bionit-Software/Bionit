@@ -6,6 +6,9 @@ import usePatientsFiles, {
   useSinglePatientFile,
 } from "../../hooks/usePatients";
 import { useSingleZone, useZones } from "../../hooks/useZones";
+import Button from "../Button";
+import Chip from "../Chip";
+import ModalTitle from "../ModalTitle";
 import BaseDialog from "./BaseDialog";
 
 export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
@@ -72,9 +75,10 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
         }}
       >
         <div className="container flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
+          <ModalTitle title="Elija la zona del llamado" />
+          <div className="flex flex-col gap-4">
             <select
-              className="w-full p-2 rounded-md shadow-md"
+              className="text-lg font-medium w-full p-2 bg-background text-white border-2 border-primary border-opacity-60 rounded-lg px-4"
               value={selectedZoneId}
               onChange={(e) => {
                 setSelectedZoneId(e.target.value);
@@ -91,12 +95,7 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
                 );
               })}
             </select>
-            <button
-              className="w-full p-2 rounded-md shadow-md bg-blue-500 text-white"
-              onClick={handleCaller}
-            >
-              Simular
-            </button>
+            <Button onClick={handleCaller}>Simular</Button>
           </div>
         </div>
       </BaseDialog>
@@ -110,10 +109,10 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
         modal.hide();
       }}
     >
-      <div className="z-10">
-        <h1 className="text-lg font-medium">Llamado normal</h1>
+      <div className="z-10 flex flex-col gap-6">
+        <ModalTitle title={"Llamado normal"} />
         <select
-          className="w-full p-2 rounded-md shadow-md"
+          className="text-lg font-medium w-full p-2 bg-background text-white border-2 border-primary border-opacity-60 rounded-lg px-4"
           value={selectedPatientId}
           onChange={(e) => {
             setSelectedPatientId(e.target.value);
@@ -131,7 +130,7 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
           })}
         </select>
         <select
-          className="w-full p-2 rounded-md shadow-md"
+          className="text-lg font-medium w-full p-2 bg-background text-white border-2 border-primary border-opacity-60 rounded-lg px-4"
           value={selectedZoneId}
           onChange={(e) => {
             setSelectedZoneId(e.target.value);
@@ -149,27 +148,30 @@ export const CallerDialog = NiceModal.create(({ type, user, onClose }) => {
           })}
         </select>
 
-        <label>Origen del llamado</label>
-        <input
-          type="radio"
-          value="Cama"
-          name="Cama"
-          onChange={(e) => setSelectedOrigin(e.target.value)}
-          checked={selectedOrigin === "Cama"}
-        />
-        <input
-          type="radio"
-          value="Baño"
-          name="Baño"
-          onChange={(e) => setSelectedOrigin(e.target.value)}
-          checked={selectedOrigin === "Baño"}
-        />
-        <button
-          onClick={handleCaller}
-          className="bg-gray-100 shadow-lg p-6 w-full"
-        >
-          Simular llamado
-        </button>
+        <Chip>Origen del llamado</Chip>
+        <div className="flex gap-10">
+          <label className="text-sm text-white font-bold">Cama</label>
+          <input
+            type="radio"
+            value="Cama"
+            name="Cama"
+            onChange={(e) => setSelectedOrigin(e.target.value)}
+            checked={selectedOrigin === "Cama"}
+          />
+        </div>
+        <div className="flex gap-10">
+          <label htmlFor="" className="text-sm text-white font-bold">
+            Baño
+          </label>
+          <input
+            type="radio"
+            value="Baño"
+            name="Baño"
+            onChange={(e) => setSelectedOrigin(e.target.value)}
+            checked={selectedOrigin === "Baño"}
+          />
+        </div>
+        <Button onClick={handleCaller}>Simular llamado</Button>
         <ToastContainer />
       </div>
     </BaseDialog>

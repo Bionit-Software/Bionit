@@ -36,6 +36,16 @@ export const Zones = () => {
         <Button onClick={handleAddZone}>Agregar zona</Button>
       </div>
       <div className="p-4 px-0 flex flex-col gap-6">
+        {zones.length == 0 ? (
+          <div>
+            <h1 className="text-2xl font-bold text-white">
+              No hay zonas registradas
+            </h1>
+          </div>
+        ) : (
+          <></>
+        )}
+
         {zones?.map((zone) => {
           return (
             <ListCard key={zone.id} onClick={() => handleDetailsZone(zone)}>

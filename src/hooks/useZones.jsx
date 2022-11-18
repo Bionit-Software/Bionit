@@ -31,7 +31,11 @@ export function useSingleZone(id) {
   const [zone, setZone] = React.useState(null);
   React.useEffect(() => {
     const unsub = onSnapshot(doc(db, "zones", id), (doc) => {
-      setZone({ id: doc.id, ...doc.data() });
+      setZone({
+        id: doc.id,
+        notificationsCount: doc.data().notifications.length,
+        ...doc.data(),
+      });
     });
     return () => {
       unsub();
