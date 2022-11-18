@@ -16,9 +16,9 @@ export default function Dashboard() {
     <Layout>
       <PageTitle title="Dashboard" />
       <div className="flex grow p-4 flex-row gap-x-4">
-        <div className="flex w-1/2 flex-col gap-12">
+        <div className="flex w-1/2 flex-col gap-4">
           <ZonesBarChart />
-          <div className="flex flex-row">
+          <div className="flex flex-row grow ">
             <NotificationsPieChart />
             <div className="flex grow flex-col px-4 justify-around gap-6">
               <EntityCard entity="zonas" />

@@ -29,11 +29,14 @@ export default function NotificationsPieChart() {
     },
 
     responsive: "true",
-    cutout: 75,
+    cutout: 55,
   };
   return (
-    <div className="bg-background rounded-xl flex h-fit flex-row shadow-md col-span-5 row-span-3 px-10 gap-8 w-fit mt-auto py-4">
-      <div className="py-0 h-fit">
+    <div className="bg-background rounded-xl flex h-full flex-row shadow-md col-span-5 row-span-3 px-10 gap-8 w-fit py-4 items-center relative">
+      <h1 className="text-white font-bold absolute text-lg left-0 top-0 mt-5 ml-5">
+        Notificaciones generales
+      </h1>
+      <div className="py-0 w-56 h-56">
         <Doughnut data={data} options={options} />
       </div>
       <div className="my-auto gap-6 flex flex-col justify-center">

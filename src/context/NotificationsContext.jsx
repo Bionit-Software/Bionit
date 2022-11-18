@@ -202,12 +202,18 @@ export const NotificationsProvider = ({ children }) => {
 };
 
 export const useSingleNotification = (notificationId) => {
+  console.log("le llego esta id al hook", notificationId);
   const [notification, setNotification] = React.useState(null);
   React.useEffect(() => {
     const unsubscribe = onSnapshot(
       doc(db, "notification", notificationId),
       (doc) => {
-        console.log("hook", doc.data(), notificationId);
+        console.log(
+          "se ejecuto el callback del document con esta id; ",
+          notificationId,
+          "y la info es esta: ",
+          doc.data()
+        );
         setNotification({ ...doc.data(), id: doc.id });
       }
     );

@@ -57,6 +57,7 @@ export const addZone = async (zoneName, zoneDescription) => {
     description: zoneDescription,
     patients: [],
     nurses: [],
+    notifications: [],
   });
 };
 
