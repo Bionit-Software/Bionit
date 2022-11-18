@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import { db } from "../db/database";
 import { useUser } from "../hooks/useUsers";
 import { NotificationsDialog } from "./Dialog/NotificationsDialog";
+import Bionit from "../assets/Bionit.png";
 
 const NavLink = ({ text, link, onClick }) => {
   const navigate = useNavigate();
@@ -43,14 +44,17 @@ export default function Navbar() {
 
   return (
     <div className="h-full w-2/12 bg-background p-2 shadow-lg px-6 py-4 flex flex-col justify-start">
-      <div className="container mb-8 font-bold text-4xl text-white">Bionit</div>
+      <div className="container mb-8 font-bold text-4xl text-white flex gap-2">
+        <p >Bionit</p>
+        <img src={Bionit} alt="" height="35px" width="40px"/>
+      </div>
       <motion.div
-        // initial={{ x: -100, opacity: 0 }}
-        // animate={{ x: 0, opacity: 1 }}
-        // transition={{
-        //   duration: 0.5,
-        //   ease: [0, 0.71, 0.2, 1.01],
-        // }}
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{
+          duration: 0.5,
+          ease: [0, 0.71, 0.2, 1.01],
+        }}
         className="container flex flex-col gap-6"
       >
         {userData?.rol === "admin" ? (
